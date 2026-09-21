@@ -74,33 +74,25 @@ const Contact = () => {
           <div className="lg:col-span-2 space-y-4">
             <div className="card p-5 flex items-start gap-4 hover:shadow-md transition-all">
               <span className="w-10 h-10 rounded-lg bg-sky-50 text-primary flex items-center justify-center shrink-0">
-                <FaMapMarkerAlt />
-              </span>
-              <div>
-                <h3 className="font-semibold text-slate-900 text-sm mb-0.5">Our Address</h3>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  221B Cleanway Street, Suite 4, Springfield, USA
-                </p>
-              </div>
-            </div>
-
-            <div className="card p-5 flex items-start gap-4 hover:shadow-md transition-all">
-              <span className="w-10 h-10 rounded-lg bg-sky-50 text-primary flex items-center justify-center shrink-0">
                 <FaPhoneAlt />
               </span>
               <div>
-                <h3 className="font-semibold text-slate-900 text-sm mb-0.5">Phone Line</h3>
-                <p className="text-xs text-slate-500">+1 (555) 012-3456</p>
+                <h3 className="font-semibold text-slate-900 text-sm mb-0.5">Helpline & Dispatch</h3>
+                <a href="tel:06280016815" className="text-xs font-bold text-slate-800 hover:text-primary transition-colors">
+                  062800 16815
+                </a>
               </div>
             </div>
 
             <div className="card p-5 flex items-start gap-4 hover:shadow-md transition-all">
-              <span className="w-10 h-10 rounded-lg bg-sky-50 text-primary flex items-center justify-center shrink-0">
-                <FaEnvelope />
+              <span className="w-10 h-10 rounded-lg bg-emerald-50 text-[#16A34A] flex items-center justify-center shrink-0 text-base">
+                <FaMapMarkerAlt />
               </span>
               <div>
-                <h3 className="font-semibold text-slate-900 text-sm mb-0.5">Email Support</h3>
-                <p className="text-xs text-slate-500">hello@ascleaningservices.com</p>
+                <h3 className="font-semibold text-slate-900 text-sm mb-0.5">Service Coverage</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Local neighborhood coverage across all residential & commercial sectors
+                </p>
               </div>
             </div>
 
@@ -110,7 +102,7 @@ const Contact = () => {
               </span>
               <div>
                 <h3 className="font-semibold text-slate-900 text-sm mb-0.5">Working Hours</h3>
-                <p className="text-xs text-slate-500">Mon - Sat: 7:00 AM - 8:00 PM</p>
+                <p className="text-xs text-slate-500">24/7 Priority Emergency Support & Scheduled Cleaning</p>
               </div>
             </div>
 

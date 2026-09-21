@@ -8,12 +8,14 @@ import { useAuth } from "../context/AuthContext";
 import { Spinner } from "../components/UIState";
 
 const defaultServicesList = [
-  { _id: "1", title: "Residential Cleaning", price: 89 },
-  { _id: "2", title: "Commercial Cleaning", price: 149 },
-  { _id: "3", title: "Deep Cleaning", price: 179 },
-  { _id: "4", title: "Move In/Move Out Cleaning", price: 199 },
-  { _id: "5", title: "Post Construction Cleaning", price: 249 },
-  { _id: "6", title: "Custom Cleaning", price: 99 },
+  { _id: "deep-cleaning", title: "Deep Cleaning" },
+  { _id: "water-tank-cleaning", title: "Water Tank Cleaning" },
+  { _id: "home-cleaning", title: "Home Cleaning" },
+  { _id: "bathroom-cleaning", title: "Bathroom Cleaning" },
+  { _id: "kitchen-cleaning", title: "Kitchen Cleaning" },
+  { _id: "sofa-cleaning", title: "Sofa Cleaning" },
+  { _id: "floor-cleaning", title: "Floor Cleaning" },
+  { _id: "property-cleaning", title: "Property Cleaning" },
 ];
 
 const initialForm = {
