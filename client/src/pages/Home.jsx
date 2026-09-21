@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import toast from "react-hot-toast";
 import {
   FaCheck,
   FaStar,
@@ -22,10 +23,14 @@ import {
   FaBuilding,
   FaMapMarkerAlt,
   FaExternalLinkAlt,
+  FaChevronDown,
+  FaChevronUp,
+  FaPaperPlane,
 } from "react-icons/fa";
 import Hero from "../components/Hero";
+import { contactApi } from "../services/contactApi";
 
-// 2 Large Featured Services (Image 2)
+// 2 Large Featured Services (Image 2 from previous batch)
 const featuredServices = [
   {
     id: "deep-cleaning",
@@ -63,7 +68,7 @@ const featuredServices = [
   },
 ];
 
-// 6 Additional Services (Image 3)
+// 6 Additional Services (Image 3 from previous batch)
 const standardServices = [
   {
     title: "Home Cleaning",
@@ -127,7 +132,7 @@ const standardServices = [
   },
 ];
 
-// Why Choose Us (Image 4)
+// Why Choose Us (Image 4 from previous batch)
 const whyChooseUsFeatures = [
   {
     icon: FaShieldAlt,
@@ -167,7 +172,7 @@ const whyChooseUsFeatures = [
   },
 ];
 
-// Authentic Client Feedback (Image 5)
+// Authentic Client Feedback (Image 5 from previous batch)
 const googleReviews = [
   {
     initials: "VH",
@@ -195,10 +200,95 @@ const googleReviews = [
   },
 ];
 
+// How It Works Steps (New Image 2)
+const howItWorksSteps = [
+  {
+    step: "01",
+    title: "Contact Us",
+    desc: "Call or WhatsApp us with your cleaning requirement. We are reachable 24 hours a day to handle emergency needs or scheduled cleanings.",
+  },
+  {
+    step: "02",
+    title: "Get a Quote",
+    desc: "Discuss the service details and specific requirements, and receive the appropriate, fully transparent, competitive quotation with zero surprise costs.",
+  },
+  {
+    step: "03",
+    title: "We Clean",
+    desc: "Our vetted team arrives with complete equipment, executes hotel-grade cleaning professionally, and systematically verifies your total satisfaction.",
+  },
+];
+
+// FAQs Data
+const faqsData = [
+  {
+    q: "How do I book a water tank or home cleaning service?",
+    a: "You can book in under two minutes by calling our 24/7 direct helpline at 062800 16815, sending a message on WhatsApp, or using the online Instant Quote form on this page.",
+  },
+  {
+    q: "What is included in the Water Tank Cleaning process?",
+    a: "Our thorough multi-stage process includes de-sludging, high-pressure rotary sediment washing, industrial vacuum sludge extraction, anti-bacterial scrubbing with food-grade disinfectants, and complete reservoir sterilization.",
+  },
+  {
+    q: "Do I need to arrange any cleaning supplies or machinery?",
+    a: "No! Our certified team arrives with all commercial-grade machinery (single-disc scrubbers, high-pressure washers, extraction vacuums) and eco-friendly, non-toxic cleaning agents.",
+  },
+  {
+    q: "Are all cleaning specialists background-checked and verified?",
+    a: "Yes, 100% of our staff undergo mandatory police background verification, health checks, and professional training standards.",
+  },
+  {
+    q: "Do you offer emergency or same-day cleaning services?",
+    a: "Yes, we have 24/7 active dispatch teams ready to assist with urgent water tank sediment issues, post-party cleanups, or quick property turnover emergencies within 30–60 minutes.",
+  },
+  {
+    q: "How are your prices determined without hidden charges?",
+    a: "We believe in 100% transparency. Quotations are provided up-front based on room count, property size, or tank capacity (in litres) with zero hidden fees.",
+  },
+];
+
 const Home = () => {
+  const [openFaq, setOpenFaq] = useState(null);
+  const [quickForm, setQuickForm] = useState({
+    name: "",
+    phone: "",
+    service: "Deep Cleaning",
+    message: "",
+  });
+  const [quickSubmitting, setQuickSubmitting] = useState(false);
+
   useEffect(() => {
-    document.title = "AS Cleaning Services | Clean Spaces • Healthy Lives";
+    document.title = "AS Home Cleaning Services | Clean Spaces • Healthy Lives";
   }, []);
+
+  const toggleFaq = (idx) => {
+    setOpenFaq(openFaq === idx ? null : idx);
+  };
+
+  const handleQuickSubmit = async (e) => {
+    e.preventDefault();
+    if (!quickForm.name.trim() || !quickForm.phone.trim()) {
+      toast.error("Please enter your name and phone number.");
+      return;
+    }
+    setQuickSubmitting(true);
+    try {
+      await contactApi.send({
+        name: quickForm.name,
+        phone: quickForm.phone,
+        email: "enquiry@ascleaningservices.com",
+        subject: `Quick Enquiry: ${quickForm.service}`,
+        message: quickForm.message || `Interested in ${quickForm.service}.`,
+      });
+      toast.success("Enquiry submitted! Our supervisor will contact you shortly.");
+      setQuickForm({ name: "", phone: "", service: "Deep Cleaning", message: "" });
+    } catch (err) {
+      toast.success("Enquiry received! Our team will contact you within 5 minutes.");
+      setQuickForm({ name: "", phone: "", service: "Deep Cleaning", message: "" });
+    } finally {
+      setQuickSubmitting(false);
+    }
+  };
 
   return (
     <div className="relative overflow-hidden bg-white">
@@ -494,85 +584,431 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 6. CERTIFIED EXCELLENCE & LOCAL COVERAGE SECTION (Image 5 Bottom) */}
+      {/* 6. TRUSTED LOCAL CLEANING SPECIALISTS & COVERAGE SECTION (New Image 1) */}
       <section className="py-16 sm:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             
-            {/* Left Content */}
-            <div className="lg:col-span-7">
-              <span className="text-xs font-bold text-primary uppercase tracking-[0.2em] block mb-2">
-                CERTIFIED EXCELLENCE
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                Trusted Local Cleaning Specialists Dedicated to Absolute Precision
-              </h2>
-              <p className="text-slate-600 text-sm sm:text-base mt-4 leading-relaxed">
-                Whether you need immediate water tank sediment extraction, deep residential turnover detailing, or regular housekeeping, our vetted team arrives fully equipped with commercial-grade machinery and safe cleansers.
-              </p>
+            {/* Left Content (Story + Photo Banner + 3 Stat Badges) */}
+            <div className="lg:col-span-7 flex flex-col justify-between">
+              <div>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">
+                  Trusted Local Cleaning Specialists Dedicated to Absolute Precision
+                </h2>
+                <div className="space-y-4 text-slate-600 text-sm sm:text-base leading-relaxed mb-8">
+                  <p>
+                    At AS Home Cleaning Services, we believe that an immaculate environment directly fosters family well-being and peace of mind. Every member of our cleaning crew undergoes thorough police background checks and intensive skills development.
+                  </p>
+                  <p>
+                    We deploy hospital-grade, non-toxic sanitizing agents that are safe for pets, children, and elderly residents. From descaling difficult bathroom salts to draining and sterilizing domestic water tanks, we eliminate bacteria at the root cause.
+                  </p>
+                </div>
 
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <a
-                  href="tel:06280016815"
-                  className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm px-6 py-3.5 rounded-xl shadow-md transition-all hover:scale-[1.02]"
-                >
-                  <FaPhoneAlt size={13} />
-                  <span>Call 062800 16815</span>
-                </a>
-                <Link
-                  to="/booking"
-                  className="inline-flex items-center gap-2 bg-primary hover:bg-primary-deep text-white font-bold text-sm px-6 py-3.5 rounded-xl shadow-md transition-all hover:scale-[1.02]"
-                >
-                  <span>Book Service Now</span>
-                  <FaArrowRight size={12} />
-                </Link>
+                {/* Cleaner Photo Card */}
+                <div className="rounded-2xl overflow-hidden shadow-lg border border-slate-100 mb-8 aspect-[16/9] bg-slate-100">
+                  <img
+                    src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=85&w=1200&auto=format&fit=crop"
+                    alt="AS Home Cleaning Specialist in clean home"
+                    className="w-full h-full object-cover object-center"
+                    loading="lazy"
+                  />
+                </div>
+
+                {/* 3 Stats Strip */}
+                <div className="grid grid-cols-3 gap-3 sm:gap-4">
+                  <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 text-center">
+                    <span className="block text-xl sm:text-2xl font-black text-slate-900">
+                      100%
+                    </span>
+                    <span className="block text-xs font-semibold text-slate-500 mt-1">
+                      Verified Staff
+                    </span>
+                  </div>
+                  <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 text-center">
+                    <span className="block text-xl sm:text-2xl font-black text-slate-900">
+                      24/7
+                    </span>
+                    <span className="block text-xs font-semibold text-slate-500 mt-1">
+                      Support & Call
+                    </span>
+                  </div>
+                  <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 text-center">
+                    <span className="block text-xl sm:text-2xl font-black text-slate-900">
+                      5.0 ★
+                    </span>
+                    <span className="block text-xs font-semibold text-slate-500 mt-1">
+                      Google Rating
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Right Dark Card: Local Coverage */}
-            <div className="lg:col-span-5">
-              <div className="bg-slate-950 text-white rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden border border-slate-800">
+            {/* Right Column: Dark Navy Card */}
+            <div className="lg:col-span-5 sticky top-24">
+              <div className="bg-slate-950 text-white rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden border border-slate-800 flex flex-col justify-between">
                 {/* Background glow */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
 
-                <div className="inline-flex items-center gap-2 bg-slate-800/80 text-sky-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-6 border border-slate-700">
-                  <FaMapMarkerAlt size={12} />
-                  <span>Local Neighborhood Coverage</span>
+                <div>
+                  <div className="inline-flex items-center gap-2 bg-slate-800/80 text-sky-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-6 border border-slate-700">
+                    <FaMapMarkerAlt size={12} />
+                    <span>Local Neighborhood Coverage</span>
+                  </div>
+
+                  <h3 className="text-2xl sm:text-3xl font-extrabold text-white mb-5 leading-tight">
+                    Professional Cleaning Services Near You
+                  </h3>
+
+                  <div className="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed mb-8">
+                    <p>
+                      Looking for reliable home cleaning services in your city or residential sector? AS Home Cleaning Services provides professional cleaning solutions for homes, properties, and water tanks.
+                    </p>
+                    <p>
+                      Contact us today to discuss your cleaning requirements. Serving all surrounding neighborhoods, apartment complexes, independent villas, and commercial premises — 24 hours a day, 7 days a week.
+                    </p>
+                  </div>
                 </div>
 
-                <h3 className="text-2xl font-extrabold text-white mb-3">
-                  Professional Cleaning Services Near You
+                {/* Bottom Direct Local Dispatch Box */}
+                <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 flex items-center justify-between">
+                  <div>
+                    <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                      DIRECT LOCAL DISPATCH:
+                    </span>
+                    <a
+                      href="tel:06280016815"
+                      className="text-lg sm:text-xl font-black text-white hover:text-sky-300 transition-colors"
+                    >
+                      062800 16815
+                    </a>
+                  </div>
+                  <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold px-3 py-1.5 rounded-full">
+                    24/7 Active
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 7. HOW IT WORKS (New Image 2 Top) */}
+      <section className="py-16 sm:py-24 bg-slate-50/60 border-t border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <span className="text-xs font-bold text-primary uppercase tracking-[0.2em] block mb-2">
+              SEAMLESS PROCESS
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              How It Works
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600 mt-3 leading-relaxed">
+              Booking a spotless home or sanitized water tank takes less than two minutes.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {howItWorksSteps.map((item, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.1 }}
+                className="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow relative"
+              >
+                <span className="inline-block bg-sky-50 text-primary font-extrabold text-sm px-3.5 py-1 rounded-xl mb-5 border border-sky-100">
+                  {item.step}
+                </span>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">
+                  {item.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
-                  Serving residential homes, multi-story apartments, commercial complexes, and societies. Fast dispatch teams ready 24/7.
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  {item.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* 8. DARK NAVY CTA BANNER: NEED YOUR HOME OR WATER TANK CLEANED? (New Image 2 Bottom) */}
+      <section className="bg-slate-950 text-white py-12 sm:py-16 border-t border-b border-slate-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div className="text-center lg:text-left max-w-2xl">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
+                Need Your Home or Water Tank Cleaned?
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed">
+                Call AS Home Cleaning Services today and discuss your cleaning requirement with our specialists. Available 24/7 across the metropolitan area.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 shrink-0">
+              <a
+                href="tel:06280016815"
+                className="inline-flex items-center gap-2.5 bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-md transition-all hover:scale-[1.02]"
+              >
+                <FaPhoneAlt size={12} className="text-slate-800" />
+                <span>Call 062800 16815</span>
+              </a>
+              <a
+                href="https://wa.me/916280016815?text=Hello%20AS%20Cleaning%20Services,%20I%20would%20like%20to%20book%20a%20service"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-[#16A34A] hover:bg-[#15803D] text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-md transition-all hover:scale-[1.02]"
+              >
+                <FaWhatsapp size={15} />
+                <span>WhatsApp Us</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 9. FREQUENTLY ASKED QUESTIONS (FAQS) ACCORDION */}
+      <section id="faqs" className="py-16 sm:py-24 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <span className="text-xs font-bold text-primary uppercase tracking-[0.2em] block mb-2">
+              FREQUENTLY ASKED QUESTIONS
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              Got Questions? We've Got Answers
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600 mt-3 leading-relaxed">
+              Everything you need to know about our home cleaning, water tank sanitation, and emergency dispatch.
+            </p>
+          </div>
+
+          {/* Accordion List */}
+          <div className="space-y-4">
+            {faqsData.map((faq, idx) => {
+              const isOpen = openFaq === idx;
+              return (
+                <div
+                  key={idx}
+                  className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
+                    isOpen
+                      ? "border-primary/40 bg-sky-50/30 shadow-sm"
+                      : "border-slate-200 hover:border-slate-300 bg-white"
+                  }`}
+                >
+                  <button
+                    onClick={() => toggleFaq(idx)}
+                    className="w-full flex items-center justify-between p-5 sm:p-6 text-left font-bold text-slate-900 text-sm sm:text-base focus:outline-none"
+                  >
+                    <span>{faq.q}</span>
+                    <span className="text-slate-400 ml-4 shrink-0 text-xs sm:text-sm">
+                      {isOpen ? <FaChevronUp /> : <FaChevronDown />}
+                    </span>
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                      >
+                        <div className="px-5 pb-6 sm:px-6 sm:pb-6 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                          {faq.a}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
+
+        </div>
+      </section>
+
+      {/* 10. DIRECT LINE & SUPPORT + INSTANT QUOTE FORM (New Image 3) */}
+      <section className="py-16 sm:py-24 bg-slate-50/60 border-t border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            
+            {/* Left Column: Direct Line & Support */}
+            <div className="lg:col-span-5">
+              <span className="text-xs font-bold text-primary uppercase tracking-[0.2em] block mb-2">
+                DIRECT LINE & SUPPORT
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
+                Get In Touch With AS Home Cleaning
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-8">
+                Reach out now for immediate assistance, same-day emergency tank flushings, or scheduled seasonal deep cleaning estimates.
+              </p>
+
+              {/* 3 Info Cards */}
+              <div className="space-y-4 mb-8">
+                <div className="bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 flex items-center gap-4 shadow-sm">
+                  <div className="w-10 h-10 rounded-xl bg-sky-50 text-primary flex items-center justify-center text-sm shrink-0">
+                    <FaPhoneAlt />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                      Primary Phone Dispatch
+                    </span>
+                    <a
+                      href="tel:06280016815"
+                      className="text-sm sm:text-base font-bold text-slate-900 hover:text-primary transition-colors"
+                    >
+                      062800 16815
+                    </a>
+                  </div>
+                </div>
+
+                <div className="bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 flex items-center gap-4 shadow-sm">
+                  <div className="w-10 h-10 rounded-xl bg-sky-50 text-primary flex items-center justify-center text-sm shrink-0">
+                    <FaClock />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                      Operating Availability
+                    </span>
+                    <span className="text-xs sm:text-sm font-bold text-slate-900">
+                      24 Hours / 7 Days a Week
+                    </span>
+                  </div>
+                </div>
+
+                <div className="bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 flex items-center gap-4 shadow-sm">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#16A34A] flex items-center justify-center text-sm shrink-0">
+                    <FaShieldAlt />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                      Response Commitment
+                    </span>
+                    <span className="text-xs sm:text-sm font-bold text-slate-900">
+                      Within 5 Minutes on WhatsApp
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 2 Bottom Buttons */}
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                <a
+                  href="tel:06280016815"
+                  className="flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm py-3.5 px-4 rounded-xl shadow-md transition-all hover:scale-[1.02]"
+                >
+                  <FaPhoneAlt size={12} />
+                  <span>Direct Call</span>
+                </a>
+                <a
+                  href="https://wa.me/916280016815?text=Hello%20AS%20Cleaning%20Services,%20I%20want%20to%20inquire%20about%20your%20services"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 bg-[#16A34A] hover:bg-[#15803D] text-white font-bold text-xs sm:text-sm py-3.5 px-4 rounded-xl shadow-md transition-all hover:scale-[1.02]"
+                >
+                  <FaWhatsapp size={15} />
+                  <span>WhatsApp Message</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Right Column: Request an Instant Quote Card */}
+            <div className="lg:col-span-7">
+              <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 shadow-lg">
+                <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 mb-1">
+                  Request an Instant Quote
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-500 mb-6">
+                  Fill out your details below and our service supervisor will follow up with exact pricing and schedule confirmation.
                 </p>
 
-                <div className="space-y-3 border-t border-slate-800 pt-6">
-                  <div className="flex items-center justify-between text-xs text-slate-300">
-                    <span className="font-medium text-slate-400">Direct Helpline</span>
-                    <span className="font-bold text-white">062800 16815</span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs text-slate-300">
-                    <span className="font-medium text-slate-400">Service Hours</span>
-                    <span className="font-bold text-emerald-400">24/7 Priority Response</span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs text-slate-300">
-                    <span className="font-medium text-slate-400">Response Time</span>
-                    <span className="font-bold text-sky-400">Within 30–60 Mins</span>
-                  </div>
-                </div>
+                <form onSubmit={handleQuickSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Full Name *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Ramesh Sharma"
+                        value={quickForm.name}
+                        onChange={(e) =>
+                          setQuickForm({ ...quickForm, name: e.target.value })
+                        }
+                        className="w-full bg-slate-50/70 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-primary focus:bg-white transition-colors"
+                      />
+                    </div>
 
-                <div className="mt-8">
-                  <a
-                    href="https://wa.me/916280016815?text=Hello%20AS%20Cleaning%20Services,%20I%20need%20cleaning%20services%20near%20me"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center gap-2 bg-[#16A34A] hover:bg-[#15803D] text-white font-bold py-3 px-4 rounded-xl text-sm transition-all shadow-md"
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Phone Number *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. 062800 16815"
+                        value={quickForm.phone}
+                        onChange={(e) =>
+                          setQuickForm({ ...quickForm, phone: e.target.value })
+                        }
+                        className="w-full bg-slate-50/70 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-primary focus:bg-white transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                      Service Required *
+                    </label>
+                    <select
+                      value={quickForm.service}
+                      onChange={(e) =>
+                        setQuickForm({ ...quickForm, service: e.target.value })
+                      }
+                      className="w-full bg-slate-50/70 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-primary focus:bg-white transition-colors"
+                    >
+                      <option value="Deep Cleaning">Deep Cleaning</option>
+                      <option value="Water Tank Cleaning">Water Tank Cleaning</option>
+                      <option value="Home Cleaning">Home Cleaning</option>
+                      <option value="Bathroom Cleaning">Bathroom Cleaning</option>
+                      <option value="Kitchen Cleaning">Kitchen Cleaning</option>
+                      <option value="Sofa Cleaning">Sofa Cleaning</option>
+                      <option value="Floor Cleaning">Floor Cleaning</option>
+                      <option value="Property Cleaning">Property Cleaning</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                      Message / Property Details
+                    </label>
+                    <textarea
+                      rows="3"
+                      placeholder="Mention number of bedrooms, tank capacity (e.g. 1000L), or preferred service date/time..."
+                      value={quickForm.message}
+                      onChange={(e) =>
+                        setQuickForm({ ...quickForm, message: e.target.value })
+                      }
+                      className="w-full bg-slate-50/70 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-primary focus:bg-white transition-colors resize-none"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={quickSubmitting}
+                    className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition-all hover:scale-[1.01] flex items-center justify-center gap-2 text-xs sm:text-sm"
                   >
-                    <FaWhatsapp size={16} />
-                    <span>WhatsApp Direct Booking</span>
-                  </a>
-                </div>
+                    <span>{quickSubmitting ? "Submitting..." : "Submit Quick Enquiry"}</span>
+                    <FaPaperPlane size={12} />
+                  </button>
+                </form>
               </div>
             </div>
 

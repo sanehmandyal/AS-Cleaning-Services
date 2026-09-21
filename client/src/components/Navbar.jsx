@@ -18,6 +18,7 @@ const navLinks = [
   { to: "/about", label: "About" },
   { to: "/#why-choose-us", label: "Why Choose Us" },
   { to: "/#reviews", label: "Reviews" },
+  { to: "/#faqs", label: "FAQs" },
   { to: "/contact", label: "Contact" },
 ];
 
