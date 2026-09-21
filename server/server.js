@@ -25,9 +25,28 @@ const app = express();
 
 // Security & core middleware
 app.use(helmet({ crossOriginResourcePolicy: false }));
+
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  "https://as-cleaning-services.vercel.app",
+  "http://localhost:5173",
+  "http://localhost:3000",
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: (origin, callback) => {
+      // allow requests with no origin (like mobile apps, curl, postman, render health checks)
+      if (!origin) return callback(null, true);
+      if (
+        allowedOrigins.includes(origin) ||
+        origin.endsWith(".vercel.app") ||
+        process.env.NODE_ENV !== "production"
+      ) {
+        return callback(null, true);
+      }
+      return callback(null, true); // Permissive CORS for public API endpoints
+    },
     credentials: true,
   })
 );
@@ -35,6 +54,16 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(mongoSanitize());
 if (process.env.NODE_ENV !== "test") app.use(morgan("dev"));
+
+// Root Welcome & Health check
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "AS Cleaning Services API is active and running 🚀",
+    status: "healthy",
+    timestamp: new Date().toISOString(),
+  });
+});
 
 // Rate limiting for auth & booking/contact endpoints
 const limiter = rateLimit({
