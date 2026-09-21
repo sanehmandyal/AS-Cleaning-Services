@@ -30,104 +30,158 @@ import {
 import Hero from "../components/Hero";
 import { contactApi } from "../services/contactApi";
 
-// 2 Large Featured Services (Image 2 from previous batch)
-const featuredServices = [
+// 8 Unified Professional Services
+const allServices = [
   {
     id: "deep-cleaning",
+    category: "popular",
     tag: "MOST POPULAR",
+    tagColor: "bg-sky-50 text-primary border-sky-200",
     icon: FaBroom,
     title: "Deep Cleaning",
     description:
-      "Thorough cleaning for homes and spaces that need detailed attention, from floors and surfaces to hard-to-reach areas, baseboards, and ceiling fixtures.",
+      "Thorough cleaning for homes and spaces that need detailed attention, from floors to hard-to-reach baseboards and ceiling fixtures.",
     image:
-      "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=85&w=900&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=85&w=800&auto=format&fit=crop",
     features: [
-      "Complete sanitization of all high-touch switchboards & doors",
-      "Deep grime elimination behind heavy cabinetry & appliances",
-      "Under-furniture vacuuming and antibacterial surface buffing",
+      "Complete sanitization of all high-touch areas & doors",
+      "Deep grime elimination behind heavy cabinetry",
+      "Under-furniture vacuuming & antibacterial surface buffing",
     ],
     ctaText: "Book Deep Cleaning",
     link: "/booking?service=deep-cleaning",
   },
   {
     id: "water-tank-cleaning",
+    category: "popular",
     tag: "CUSTOMER FAVORITE",
+    tagColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
     icon: FaWater,
     title: "Water Tank Cleaning",
     description:
-      "Professional water tank cleaning to help remove dirt, sludge, bacterial colonies, and algae buildup to keep your drinking and household water purer.",
+      "High-pressure rotary de-sludging and food-grade disinfectant scrub to eliminate sediment, algae, and bacteria from domestic water tanks.",
     image:
-      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=85&w=900&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=85&w=800&auto=format&fit=crop",
     features: [
-      "High-pressure rotary de-sludging and sediment flushing",
+      "High-pressure rotary de-sludging & sediment flushing",
       "Food-grade safe disinfectant scrub for inner walls",
-      "Overhead and underground reservoir sanitation specialists",
+      "Overhead & underground reservoir sanitation",
     ],
-    ctaText: "Book Water Tank Cleaning",
+    ctaText: "Book Tank Cleaning",
     link: "/booking?service=water-tank-cleaning",
   },
-];
-
-// 6 Additional Services (Image 3 from previous batch)
-const standardServices = [
   {
-    title: "Home Cleaning",
-    tag: "Weekly / One-off",
+    id: "home-cleaning",
+    category: "home",
+    tag: "WEEKLY / ONE-OFF",
+    tagColor: "bg-indigo-50 text-indigo-700 border-indigo-200",
     icon: FaHome,
     image:
-      "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=80&w=700&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=80&w=800&auto=format&fit=crop",
+    title: "Home & Villa Cleaning",
     description:
-      "Comprehensive recurring and one-off house sanitation including bedrooms, balconies, living rooms, and common family zones.",
+      "Comprehensive recurring or one-off house sanitation covering bedrooms, balconies, living halls, and family living zones.",
+    features: [
+      "Full bedroom & living room dust extraction",
+      "Window frames, balconies & ceiling fan detailing",
+      "Eco-friendly, safe deodorization",
+    ],
+    ctaText: "Book Home Cleaning",
     link: "/booking?service=home-cleaning",
   },
   {
-    title: "Bathroom Cleaning",
-    tag: "Limescale Removal",
+    id: "bathroom-cleaning",
+    category: "home",
+    tag: "LIMESCALE REMOVAL",
+    tagColor: "bg-amber-50 text-amber-700 border-amber-200",
     icon: FaBath,
     image:
-      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=700&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=800&auto=format&fit=crop",
+    title: "Bathroom Cleaning",
     description:
-      "Targeted hard-water scale removal, high-pressure grout scrubbing, mirror polishes, and medical-grade fixture disinfection.",
+      "Targeted hard-water scale removal, high-pressure grout scrubbing, mirror polish, and hospital-grade fixture disinfection.",
+    features: [
+      "Heavy hard-water stain & limescale descaling",
+      "Shower glass & tile grout pressure scrubbing",
+      "Sanitary fixture & drain pipe sanitization",
+    ],
+    ctaText: "Book Bathroom Clean",
     link: "/booking?service=bathroom-cleaning",
   },
   {
-    title: "Kitchen Cleaning",
-    tag: "Full Degreasing",
+    id: "kitchen-cleaning",
+    category: "home",
+    tag: "FULL DEGREASING",
+    tagColor: "bg-rose-50 text-rose-700 border-rose-200",
     icon: FaUtensils,
     image:
-      "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=700&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=800&auto=format&fit=crop",
+    title: "Kitchen Degreasing",
     description:
       "Specialized degreasing for oil-stained chimney hoods, gas burners, exhaust fans, sink drains, and modular cabinet interiors.",
+    features: [
+      "Chimney filters & exhaust fan grease stripping",
+      "Gas stove, countertops & backsplash degreasing",
+      "Internal cabinet sanitization & pest-safe wipe",
+    ],
+    ctaText: "Book Kitchen Clean",
     link: "/booking?service=kitchen-cleaning",
   },
   {
-    title: "Sofa Cleaning",
-    tag: "Fabric & Leather",
+    id: "sofa-cleaning",
+    category: "specialized",
+    tag: "FABRIC & LEATHER",
+    tagColor: "bg-teal-50 text-teal-700 border-teal-200",
     icon: FaCouch,
     image:
-      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=700&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop",
+    title: "Sofa & Upholstery",
     description:
-      "Deep fabric shampooing, high-suction extraction vacuuming, allergen purging, and delicate fabric & leather upholstery protection.",
+      "Deep fabric shampooing, high-suction extraction vacuuming, allergen purging, and upholstery material protection.",
+    features: [
+      "Deep extraction stain & odor neutralization",
+      "Dust mite & pet allergen elimination",
+      "Fabric reviving & quick-dry technology",
+    ],
+    ctaText: "Book Sofa Cleaning",
     link: "/booking?service=sofa-cleaning",
   },
   {
-    title: "Floor Cleaning",
-    tag: "Buffing & Scrubbing",
+    id: "floor-cleaning",
+    category: "specialized",
+    tag: "BUFFING & SCRUBBING",
+    tagColor: "bg-cyan-50 text-cyan-700 border-cyan-200",
     icon: FaBroom,
     image:
-      "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=700&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=800&auto=format&fit=crop",
+    title: "Floor Machine Buffing",
     description:
-      "Industrial single-disc machine scrubbing, tile grout descaling, and high-gloss buffing for marble, granite, and vitrified tiles.",
+      "Industrial single-disc rotary machine scrubbing, tile grout descaling, and high-gloss buffing for marble, granite, and tiles.",
+    features: [
+      "Single-disc mechanical floor buffing",
+      "Tile joint & grout sediment extraction",
+      "High-shine surface sealant application",
+    ],
+    ctaText: "Book Floor Scrubbing",
     link: "/booking?service=floor-cleaning",
   },
   {
-    title: "Property Cleaning",
-    tag: "Move-in / Move-out",
+    id: "property-cleaning",
+    category: "specialized",
+    tag: "MOVE-IN / MOVE-OUT",
+    tagColor: "bg-purple-50 text-purple-700 border-purple-200",
     icon: FaBuilding,
     image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=700&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop",
+    title: "Property Turnover",
     description:
       "Full turnover sanitization for vacant properties, post-lease handovers, rental preparations, and move-in deep detailing.",
+    features: [
+      "Total property wall-to-wall handover detailing",
+      "Fixture, wardrobe & balcony sanitization",
+      "Immediate ready-to-move freshness guarantee",
+    ],
+    ctaText: "Book Property Clean",
     link: "/booking?service=property-cleaning",
   },
 ];
@@ -248,6 +302,7 @@ const faqsData = [
 ];
 
 const Home = () => {
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [openFaq, setOpenFaq] = useState(null);
   const [quickForm, setQuickForm] = useState({
     name: "",
@@ -260,6 +315,11 @@ const Home = () => {
   useEffect(() => {
     document.title = "AS Home Cleaning Services | Clean Spaces • Healthy Lives";
   }, []);
+
+  const filteredServices = allServices.filter((s) => {
+    if (selectedCategory === "all") return true;
+    return s.category === selectedCategory;
+  });
 
   const toggleFaq = (idx) => {
     setOpenFaq(openFaq === idx ? null : idx);
@@ -295,12 +355,12 @@ const Home = () => {
       {/* 1. HERO SECTION */}
       <Hero />
 
-      {/* 2. TAILORED CARE STANDARDS - 2 FEATURED SERVICES (Image 2) */}
-      <section id="services" className="py-16 sm:py-24 bg-slate-50/50 border-t border-slate-100">
+      {/* 2. OUR CLEANING SERVICES - UNIFIED PROFESSIONAL 8-CARD GRID */}
+      <section id="services" className="py-16 sm:py-24 bg-slate-50/60 border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Header */}
-          <div className="text-center max-w-3xl mx-auto mb-14">
+          {/* Section Header */}
+          <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="text-xs font-bold text-primary uppercase tracking-[0.2em] block mb-2">
               TAILORED CARE STANDARDS
             </span>
@@ -310,129 +370,95 @@ const Home = () => {
             <p className="text-sm sm:text-base text-slate-600 mt-3 leading-relaxed">
               Professional cleaning solutions meticulously calibrated for residential sanctuaries, domestic water storage, and commercial properties.
             </p>
+
+            {/* Category Filter Pills */}
+            <div className="flex flex-wrap items-center justify-center gap-2 mt-8">
+              {[
+                { id: "all", label: "All Services (8)" },
+                { id: "popular", label: "Most Popular" },
+                { id: "home", label: "Home & Villa" },
+                { id: "specialized", label: "Specialized" },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setSelectedCategory(tab.id)}
+                  className={`text-xs sm:text-sm font-semibold px-4 py-2 rounded-full transition-all ${
+                    selectedCategory === tab.id
+                      ? "bg-slate-900 text-white shadow-sm"
+                      : "bg-white text-slate-600 border border-slate-200 hover:border-slate-300 hover:text-slate-900"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* 2 Big Featured Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {featuredServices.map((service, idx) => (
+          {/* Unified 8-Service Grid (4 Columns on Desktop, 2 on Tablet, 1 on Mobile) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {filteredServices.map((service, idx) => (
               <motion.div
                 key={service.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                layout
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, delay: idx * 0.04 }}
+                className="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl hover:border-sky-300 transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
-                  {/* Photo with badges */}
-                  <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-slate-100">
+                  {/* Photo with Badge */}
+                  <div className="relative h-48 w-full overflow-hidden bg-slate-100">
                     <img
                       src={service.image}
                       alt={service.title}
-                      className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                       onError={(e) => {
                         e.currentTarget.src =
-                          "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=900";
+                          "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=800";
                       }}
                     />
-                    <div className="absolute top-4 left-4">
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-sky-50 text-primary border border-sky-200 shadow-sm">
+                    <div className="absolute top-3 left-3">
+                      <span
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border shadow-sm ${service.tagColor}`}
+                      >
                         {service.tag}
                       </span>
                     </div>
-                    <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm text-slate-800 flex items-center justify-center text-sm shadow-md">
+                    <div className="absolute top-3 right-3 w-8 h-8 rounded-lg bg-white/95 backdrop-blur-sm text-slate-800 flex items-center justify-center text-xs shadow-md">
                       <service.icon />
                     </div>
                   </div>
 
-                  {/* Content */}
-                  <div className="p-6 sm:p-8">
-                    <h3 className="text-2xl font-extrabold text-slate-900 mb-3">
-                      {service.title}
-                    </h3>
-                    <p className="text-sm text-slate-600 leading-relaxed mb-6">
-                      {service.description}
-                    </p>
+                  {/* Body Content */}
+                  <div className="p-5 flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-primary transition-colors">
+                        {service.title}
+                      </h3>
+                      <p className="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-2">
+                        {service.description}
+                      </p>
+                    </div>
 
-                    {/* Bullet Checklist */}
-                    <ul className="space-y-3">
+                    {/* Features Checklist */}
+                    <ul className="space-y-2 border-t border-slate-100 pt-3 mb-2">
                       {service.features.map((feat, fIdx) => (
-                        <li key={fIdx} className="flex items-start gap-3">
-                          <span className="text-[#16A34A] mt-0.5 shrink-0 text-sm">
-                            <FaCheck />
-                          </span>
-                          <span className="text-xs sm:text-sm text-slate-700 font-medium">
-                            {feat}
-                          </span>
+                        <li key={fIdx} className="flex items-start gap-2 text-[11px] text-slate-600">
+                          <FaCheck className="text-[#16A34A] shrink-0 text-xs mt-0.5" />
+                          <span className="line-clamp-1">{feat}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 </div>
 
-                {/* Footer Button */}
-                <div className="p-6 sm:p-8 pt-0">
+                {/* Card CTA Button */}
+                <div className="p-5 pt-0">
                   <Link
                     to={service.link}
-                    className="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition-all hover:scale-[1.01]"
+                    className="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 px-4 rounded-xl text-xs shadow-sm transition-all hover:scale-[1.01]"
                   >
                     <span>{service.ctaText}</span>
-                    <FaArrowRight size={13} />
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* 3. 6 SERVICE GRID (Image 3) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-            {standardServices.map((svc, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
-              >
-                <div>
-                  {/* Photo Top */}
-                  <div className="relative h-44 w-full overflow-hidden bg-slate-100">
-                    <img
-                      src={svc.image}
-                      alt={svc.title}
-                      className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
-                      onError={(e) => {
-                        e.currentTarget.src =
-                          "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=700";
-                      }}
-                    />
-                    <div className="absolute top-3 left-3 w-8 h-8 rounded-lg bg-white/95 backdrop-blur-sm text-primary flex items-center justify-center text-sm shadow-md">
-                      <svc.icon />
-                    </div>
-                  </div>
-
-                  {/* Body */}
-                  <div className="p-5 sm:p-6">
-                    <h4 className="text-lg font-bold text-slate-900 mb-2">
-                      {svc.title}
-                    </h4>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                      {svc.description}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Footer Tag & Inquire Link */}
-                <div className="px-5 sm:px-6 pb-5 pt-2 flex items-center justify-between border-t border-slate-100">
-                  <span className="text-[11px] font-semibold text-primary bg-sky-50 px-2.5 py-1 rounded-md">
-                    {svc.tag}
-                  </span>
-                  <Link
-                    to={svc.link}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-800 hover:text-primary transition-colors"
-                  >
-                    <span>Inquire</span>
                     <FaArrowRight size={10} />
                   </Link>
                 </div>
