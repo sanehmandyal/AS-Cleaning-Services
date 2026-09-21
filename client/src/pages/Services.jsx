@@ -19,7 +19,7 @@ const fallbackServices = [
     slug: "water-tank-cleaning",
     shortDescription: "High-pressure rotary de-sludging and food-grade disinfectant scrub for pure, hygienic water storage.",
     icon: "FaWater",
-    image: "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?q=85&w=1200&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?q=85&w=1200&auto=format&fit=crop",
   },
   {
     _id: "3",
@@ -27,7 +27,7 @@ const fallbackServices = [
     slug: "home-cleaning",
     shortDescription: "Comprehensive recurring and one-off house sanitation including bedrooms, balconies, and living rooms.",
     icon: "FaHome",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=85&w=1200&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=85&w=1200&auto=format&fit=crop",
   },
   {
     _id: "4",
@@ -35,7 +35,7 @@ const fallbackServices = [
     slug: "bathroom-cleaning",
     shortDescription: "Targeted hard-water scale removal, high-pressure grout scrubbing, mirror polish, and fixture disinfection.",
     icon: "FaBath",
-    image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?q=85&w=1200&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=85&w=1200&auto=format&fit=crop",
   },
   {
     _id: "5",
@@ -43,7 +43,7 @@ const fallbackServices = [
     slug: "kitchen-cleaning",
     shortDescription: "Specialized degreasing for oily chimney hoods, gas burners, exhaust fans, sink drains, and cabinets.",
     icon: "FaUtensils",
-    image: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=85&w=1200&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=85&w=1200&auto=format&fit=crop",
   },
   {
     _id: "6",
@@ -59,7 +59,7 @@ const fallbackServices = [
     slug: "floor-cleaning",
     shortDescription: "Industrial single-disc machine scrubbing, tile grout descaling, and high-gloss buffing for tiles & marble.",
     icon: "FaBroom",
-    image: "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?q=85&w=1200&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1563453392212-326f5e854473?q=85&w=1200&auto=format&fit=crop",
   },
   {
     _id: "8",

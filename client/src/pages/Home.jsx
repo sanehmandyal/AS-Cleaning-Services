@@ -61,7 +61,7 @@ const allServices = [
     description:
       "High-pressure rotary de-sludging and food-grade disinfectant scrub to eliminate sediment, algae, and bacteria from domestic water tanks.",
     image:
-      "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?q=85&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?q=85&w=1200&auto=format&fit=crop",
     features: [
       "High-pressure rotary de-sludging & sediment flushing",
       "Food-grade safe disinfectant scrub for inner walls",
@@ -77,7 +77,7 @@ const allServices = [
     tagColor: "bg-indigo-50 text-indigo-700 border-indigo-200",
     icon: FaHome,
     image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=85&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=85&w=1200&auto=format&fit=crop",
     title: "Home & Villa Cleaning",
     description:
       "Comprehensive recurring or one-off house sanitation covering bedrooms, balconies, living halls, and family living zones.",
@@ -96,7 +96,7 @@ const allServices = [
     tagColor: "bg-amber-50 text-amber-700 border-amber-200",
     icon: FaBath,
     image:
-      "https://images.unsplash.com/photo-1620626011761-996317b8d101?q=85&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=85&w=1200&auto=format&fit=crop",
     title: "Bathroom Cleaning",
     description:
       "Targeted hard-water scale removal, high-pressure grout scrubbing, mirror polish, and hospital-grade fixture disinfection.",
@@ -115,7 +115,7 @@ const allServices = [
     tagColor: "bg-rose-50 text-rose-700 border-rose-200",
     icon: FaUtensils,
     image:
-      "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=85&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=85&w=1200&auto=format&fit=crop",
     title: "Kitchen Degreasing",
     description:
       "Specialized degreasing for oil-stained chimney hoods, gas burners, exhaust fans, sink drains, and modular cabinet interiors.",
@@ -153,7 +153,7 @@ const allServices = [
     tagColor: "bg-cyan-50 text-cyan-700 border-cyan-200",
     icon: FaBroom,
     image:
-      "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?q=85&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1563453392212-326f5e854473?q=85&w=1200&auto=format&fit=crop",
     title: "Floor Machine Buffing",
     description:
       "Industrial single-disc rotary machine scrubbing, tile grout descaling, and high-gloss buffing for marble, granite, and tiles.",
