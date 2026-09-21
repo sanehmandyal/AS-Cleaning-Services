@@ -145,26 +145,26 @@ export const Logo = ({ variant = "dark", size = "normal", showTagline = true, to
   const isLight = variant === "light";
   
   const content = (
-    <div className="flex items-center gap-2.5 select-none group">
+    <div className="flex items-center gap-2 sm:gap-2.5 select-none group">
       <div className="relative shrink-0 transition-transform duration-300 group-hover:scale-105">
-        <LogoIcon className={size === "large" ? "w-12 h-12" : size === "small" ? "w-8 h-8" : "w-10 h-10"} />
+        <LogoIcon className={size === "large" ? "w-10 h-10 sm:w-12 sm:h-12" : size === "small" ? "w-7 h-7 sm:w-8 sm:h-8" : "w-8 h-8 sm:w-10 sm:h-10"} />
       </div>
       <div className="flex flex-col justify-center leading-none">
         <span
           className={`font-display font-extrabold tracking-tight ${
             size === "large"
-              ? "text-2xl"
+              ? "text-xl sm:text-2xl"
               : size === "small"
-              ? "text-base"
-              : "text-lg sm:text-xl"
+              ? "text-sm sm:text-base"
+              : "text-base sm:text-lg lg:text-xl"
           } ${isLight ? "text-white" : "text-[#0F172A]"}`}
         >
           AS <span className="text-[#0284C7]">CLEANING SERVICES</span>
         </span>
         {showTagline && (
           <span
-            className={`font-semibold tracking-[0.2em] uppercase mt-0.5 ${
-              size === "large" ? "text-[10px]" : "text-[8.5px]"
+            className={`font-semibold tracking-[0.18em] uppercase mt-0.5 ${
+              size === "large" ? "text-[8.5px] sm:text-[10px]" : "text-[7.5px] sm:text-[8.5px]"
             } ${isLight ? "text-sky-300" : "text-[#0284C7]"}`}
           >
             CLEAN SPACES • HEALTHY LIVES

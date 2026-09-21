@@ -65,8 +65,8 @@ const Navbar = () => {
         scrolled ? "border-slate-200 shadow-sm" : "border-slate-100"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Brand Logo */}
           <div className="shrink-0">
             <Logo size="normal" />
@@ -185,25 +185,25 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex items-center gap-2 md:hidden">
+          <div className="flex items-center gap-1.5 md:hidden">
             <a
               href="tel:06280016815"
-              className="p-2.5 rounded-lg bg-slate-900 text-white text-sm"
+              className="p-2 sm:p-2.5 rounded-lg bg-slate-900 text-white text-xs sm:text-sm"
               aria-label="Call Dispatch"
             >
-              <FaPhoneAlt size={13} />
+              <FaPhoneAlt size={12} />
             </a>
             <a
               href="https://wa.me/916280016815?text=Hello%20AS%20Cleaning%20Services"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-lg bg-[#16A34A] text-white text-sm"
+              className="p-2 sm:p-2.5 rounded-lg bg-[#16A34A] text-white text-xs sm:text-sm"
               aria-label="WhatsApp Us"
             >
-              <FaWhatsapp size={16} />
+              <FaWhatsapp size={14} />
             </a>
             <button
-              className="p-2.5 text-slate-800 hover:text-primary transition-colors text-xl ml-1"
+              className="p-2 text-slate-800 hover:text-primary transition-colors text-lg sm:text-xl ml-0.5"
               onClick={() => setOpen(true)}
               aria-label="Open navigation menu"
             >
@@ -220,7 +220,7 @@ const Navbar = () => {
           onClick={() => setOpen(false)}
         >
           <div
-            className="absolute right-0 top-0 h-full w-80 bg-white shadow-2xl p-6 flex flex-col justify-between animate-fadeUp"
+            className="absolute right-0 top-0 h-full w-[85vw] max-w-xs bg-white shadow-2xl p-5 sm:p-6 flex flex-col justify-between animate-fadeUp"
             onClick={(e) => e.stopPropagation()}
           >
             <div>
