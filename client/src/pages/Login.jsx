@@ -33,7 +33,15 @@ const Login = () => {
       const redirectTo = location.state?.from?.pathname || "/admin";
       navigate(redirectTo, { replace: true });
     } catch (err) {
-      setError(err.response?.data?.message || "Invalid email or password.");
+      if (!err.response) {
+        setError(
+          err.message?.includes("Network") || err.code === "ERR_NETWORK"
+            ? "Server is connecting/waking up. Please wait a few seconds and try again."
+            : "Connection error. Please check your network and try again."
+        );
+      } else {
+        setError(err.response?.data?.message || "Invalid email or password.");
+      }
     } finally {
       setSubmitting(false);
     }
