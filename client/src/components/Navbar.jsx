@@ -8,6 +8,7 @@ import {
   FaUserShield,
   FaSignOutAlt,
   FaTachometerAlt,
+  FaArrowRight,
 } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 import Logo from "./Logo";
@@ -16,7 +17,7 @@ const navLinks = [
   { to: "/", label: "Home" },
   { to: "/services", label: "Services" },
   { to: "/about", label: "About" },
-  { to: "/#why-choose-us", label: "Why Choose Us" },
+  { to: "/#why-choose-us", label: "Why Us" },
   { to: "/#reviews", label: "Reviews" },
   { to: "/#faqs", label: "FAQs" },
   { to: "/contact", label: "Contact" },
@@ -62,18 +63,18 @@ const Navbar = () => {
   return (
     <header
       className={`sticky top-0 z-50 bg-white/95 backdrop-blur-md transition-all duration-200 border-b ${
-        scrolled ? "border-slate-200 shadow-sm" : "border-slate-100"
+        scrolled ? "border-slate-200/90 shadow-sm" : "border-slate-100"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20 gap-2 lg:gap-4">
           {/* Brand Logo */}
-          <div className="shrink-0">
+          <div className="shrink-0 flex items-center">
             <Logo size="normal" />
           </div>
 
-          {/* Center Navigation Links (Pill Style) */}
-          <nav className="hidden xl:flex items-center gap-1 bg-slate-50/80 p-1.5 rounded-full border border-slate-200/60">
+          {/* Desktop Navigation Links (Centered) */}
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 bg-slate-50/90 px-3 py-1.5 rounded-full border border-slate-200/70 shadow-xs">
             {navLinks.map((link) => {
               const isHash = link.to.startsWith("/#");
               const isActive = !isHash && location.pathname === link.to;
@@ -86,7 +87,7 @@ const Navbar = () => {
                     e.preventDefault();
                     handleNavClick(link.to);
                   }}
-                  className="text-xs lg:text-sm font-medium px-3.5 py-1.5 rounded-full text-slate-600 hover:text-slate-950 hover:bg-white transition-all"
+                  className="text-xs xl:text-sm font-semibold px-3 py-1.5 rounded-full text-slate-600 hover:text-slate-950 hover:bg-white transition-all whitespace-nowrap"
                 >
                   {link.label}
                 </a>
@@ -95,9 +96,9 @@ const Navbar = () => {
                   key={link.to}
                   to={link.to}
                   className={({ isActive }) =>
-                    `text-xs lg:text-sm font-medium px-3.5 py-1.5 rounded-full transition-all ${
+                    `text-xs xl:text-sm font-semibold px-3 py-1.5 rounded-full transition-all whitespace-nowrap ${
                       isActive
-                        ? "bg-white text-slate-900 shadow-sm font-semibold border border-slate-200/60"
+                        ? "bg-white text-primary shadow-xs font-bold border border-slate-200/80"
                         : "text-slate-600 hover:text-slate-950 hover:bg-white"
                     }`
                   }
@@ -108,28 +109,16 @@ const Navbar = () => {
             })}
           </nav>
 
-          {/* Right Action Bar */}
-          <div className="hidden md:flex items-center gap-3">
-            {/* Phone Dispatch Info */}
-            <div className="text-right hidden lg:block mr-1">
-              <span className="block text-[10px] font-semibold uppercase tracking-wider text-slate-400">
-                Dispatch & Booking
-              </span>
-              <a
-                href="tel:06280016815"
-                className="text-sm font-bold text-slate-900 hover:text-primary transition-colors"
-              >
-                062800 16815
-              </a>
-            </div>
-
-            {/* Call Now Button */}
+          {/* Desktop Right Action Bar */}
+          <div className="hidden lg:flex items-center gap-2.5 shrink-0">
+            {/* Call Dispatch Button */}
             <a
               href="tel:06280016815"
-              className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2.5 rounded-lg shadow-sm transition-all hover:scale-[1.02]"
+              className="inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold px-3.5 py-2.5 rounded-lg shadow-xs transition-all hover:scale-[1.02]"
+              title="Call Dispatch: 062800 16815"
             >
-              <FaPhoneAlt size={12} />
-              <span>Call Now</span>
+              <FaPhoneAlt size={11} className="text-sky-400" />
+              <span>062800 16815</span>
             </a>
 
             {/* WhatsApp Button */}
@@ -137,11 +126,19 @@ const Navbar = () => {
               href="https://wa.me/916280016815?text=Hello%20AS%20Cleaning%20Services,%20I%20would%20like%20to%20inquire%20about%20your%20services"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#16A34A] hover:bg-[#15803D] text-white text-xs font-semibold px-4 py-2.5 rounded-lg shadow-sm transition-all hover:scale-[1.02]"
+              className="inline-flex items-center gap-1.5 bg-[#16A34A] hover:bg-[#15803D] text-white text-xs font-semibold px-3.5 py-2.5 rounded-lg shadow-xs transition-all hover:scale-[1.02]"
             >
-              <FaWhatsapp size={15} />
+              <FaWhatsapp size={14} />
               <span>WhatsApp</span>
             </a>
+
+            {/* Free Quote CTA */}
+            <Link
+              to="/booking"
+              className="btn-primary text-xs !py-2.5 !px-4 shadow-xs"
+            >
+              Get a Quote
+            </Link>
 
             {/* Admin Profile Dropdown (if logged in) */}
             {isAuthenticated && isAdmin && (
@@ -184,26 +181,28 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="flex items-center gap-1.5 md:hidden">
+          {/* Mobile / Tablet Action Bar */}
+          <div className="flex items-center gap-2 lg:hidden">
             <a
               href="tel:06280016815"
-              className="p-2 sm:p-2.5 rounded-lg bg-slate-900 text-white text-xs sm:text-sm"
+              className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-slate-900 text-white hover:bg-slate-800 transition-colors shadow-xs"
               aria-label="Call Dispatch"
+              title="Call 062800 16815"
             >
-              <FaPhoneAlt size={12} />
+              <FaPhoneAlt size={12} className="text-sky-400" />
             </a>
             <a
               href="https://wa.me/916280016815?text=Hello%20AS%20Cleaning%20Services"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 sm:p-2.5 rounded-lg bg-[#16A34A] text-white text-xs sm:text-sm"
+              className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-[#16A34A] text-white hover:bg-[#15803D] transition-colors shadow-xs"
               aria-label="WhatsApp Us"
+              title="WhatsApp Us"
             >
-              <FaWhatsapp size={14} />
+              <FaWhatsapp size={15} />
             </a>
             <button
-              className="p-2 text-slate-800 hover:text-primary transition-colors text-lg sm:text-xl ml-0.5"
+              className="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-slate-50 text-slate-800 hover:bg-slate-100 hover:text-primary transition-colors text-base"
               onClick={() => setOpen(true)}
               aria-label="Open navigation menu"
             >
@@ -216,27 +215,27 @@ const Navbar = () => {
       {/* Mobile Drawer */}
       {open && (
         <div
-          className="fixed inset-0 z-[60] bg-slate-950/50 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 z-[60] bg-slate-950/60 backdrop-blur-sm lg:hidden transition-opacity"
           onClick={() => setOpen(false)}
         >
           <div
-            className="absolute right-0 top-0 h-full w-[85vw] max-w-xs bg-white shadow-2xl p-5 sm:p-6 flex flex-col justify-between animate-fadeUp"
+            className="absolute right-0 top-0 h-full w-[85vw] max-w-xs bg-white shadow-2xl p-5 sm:p-6 flex flex-col justify-between animate-fadeUp overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div>
-              <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-5">
+              <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
                 <Logo size="small" showTagline={false} />
                 <button
                   onClick={() => setOpen(false)}
-                  className="p-1.5 text-slate-400 hover:text-slate-700 rounded-md"
+                  className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition-colors"
                   aria-label="Close menu"
                 >
-                  <FaTimes size={18} />
+                  <FaTimes size={16} />
                 </button>
               </div>
 
               {/* Mobile Nav Links */}
-              <div className="flex flex-col gap-1.5">
+              <div className="flex flex-col gap-1">
                 {navLinks.map((link) => {
                   const isHash = link.to.startsWith("/#");
                   const isActive = !isHash && location.pathname === link.to;
@@ -249,9 +248,10 @@ const Navbar = () => {
                         e.preventDefault();
                         handleNavClick(link.to);
                       }}
-                      className="text-sm font-medium py-2.5 px-3.5 rounded-lg text-slate-700 hover:bg-slate-50 transition-colors"
+                      className="text-sm font-semibold py-2.5 px-3.5 rounded-lg text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-between"
                     >
-                      {link.label}
+                      <span>{link.label}</span>
+                      <FaArrowRight size={10} className="text-slate-300" />
                     </a>
                   ) : (
                     <NavLink
@@ -259,14 +259,15 @@ const Navbar = () => {
                       to={link.to}
                       onClick={() => setOpen(false)}
                       className={({ isActive }) =>
-                        `text-sm font-medium py-2.5 px-3.5 rounded-lg transition-colors ${
+                        `text-sm font-semibold py-2.5 px-3.5 rounded-lg transition-colors flex items-center justify-between ${
                           isActive
-                            ? "bg-sky-50 text-primary font-semibold"
+                            ? "bg-sky-50 text-primary font-bold"
                             : "text-slate-700 hover:bg-slate-50"
                         }`
                       }
                     >
-                      {link.label}
+                      <span>{link.label}</span>
+                      <FaArrowRight size={10} className="text-slate-300" />
                     </NavLink>
                   );
                 })}
@@ -274,25 +275,25 @@ const Navbar = () => {
             </div>
 
             {/* Mobile Footer CTAs */}
-            <div className="pt-4 border-t border-slate-100 flex flex-col gap-2.5">
+            <div className="pt-4 border-t border-slate-100 flex flex-col gap-2.5 mt-6">
               <a
                 href="tel:06280016815"
-                className="flex items-center justify-center gap-2 bg-slate-900 text-white font-semibold py-3 rounded-lg text-sm"
+                className="flex items-center justify-center gap-2 bg-slate-900 text-white font-semibold py-2.5 rounded-lg text-sm shadow-xs"
               >
-                <FaPhoneAlt size={12} /> Call: 062800 16815
+                <FaPhoneAlt size={12} className="text-sky-400" /> Call: 062800 16815
               </a>
               <a
                 href="https://wa.me/916280016815"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-[#16A34A] text-white font-semibold py-3 rounded-lg text-sm"
+                className="flex items-center justify-center gap-2 bg-[#16A34A] text-white font-semibold py-2.5 rounded-lg text-sm shadow-xs"
               >
-                <FaWhatsapp size={16} /> WhatsApp Us
+                <FaWhatsapp size={15} /> WhatsApp Us
               </a>
               <Link
                 to="/booking"
                 onClick={() => setOpen(false)}
-                className="btn-primary w-full text-center text-sm !py-2.5"
+                className="btn-primary w-full text-center text-sm !py-2.5 shadow-xs"
               >
                 Get a Free Quote
               </Link>
