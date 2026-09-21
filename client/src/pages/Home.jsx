@@ -30,7 +30,7 @@ import {
 import Hero from "../components/Hero";
 import { contactApi } from "../services/contactApi";
 
-// 8 Unified Professional Services
+// 8 Unified Professional Services with Exact-Match Imagery
 const allServices = [
   {
     id: "deep-cleaning",
@@ -42,7 +42,7 @@ const allServices = [
     description:
       "Thorough cleaning for homes and spaces that need detailed attention, from floors to hard-to-reach baseboards and ceiling fixtures.",
     image:
-      "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=85&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=85&w=1200&auto=format&fit=crop",
     features: [
       "Complete sanitization of all high-touch areas & doors",
       "Deep grime elimination behind heavy cabinetry",
@@ -61,7 +61,7 @@ const allServices = [
     description:
       "High-pressure rotary de-sludging and food-grade disinfectant scrub to eliminate sediment, algae, and bacteria from domestic water tanks.",
     image:
-      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=85&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?q=85&w=1200&auto=format&fit=crop",
     features: [
       "High-pressure rotary de-sludging & sediment flushing",
       "Food-grade safe disinfectant scrub for inner walls",
@@ -77,7 +77,7 @@ const allServices = [
     tagColor: "bg-indigo-50 text-indigo-700 border-indigo-200",
     icon: FaHome,
     image:
-      "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=85&w=1200&auto=format&fit=crop",
     title: "Home & Villa Cleaning",
     description:
       "Comprehensive recurring or one-off house sanitation covering bedrooms, balconies, living halls, and family living zones.",
@@ -96,7 +96,7 @@ const allServices = [
     tagColor: "bg-amber-50 text-amber-700 border-amber-200",
     icon: FaBath,
     image:
-      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1620626011761-996317b8d101?q=85&w=1200&auto=format&fit=crop",
     title: "Bathroom Cleaning",
     description:
       "Targeted hard-water scale removal, high-pressure grout scrubbing, mirror polish, and hospital-grade fixture disinfection.",
@@ -115,7 +115,7 @@ const allServices = [
     tagColor: "bg-rose-50 text-rose-700 border-rose-200",
     icon: FaUtensils,
     image:
-      "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=85&w=1200&auto=format&fit=crop",
     title: "Kitchen Degreasing",
     description:
       "Specialized degreasing for oil-stained chimney hoods, gas burners, exhaust fans, sink drains, and modular cabinet interiors.",
@@ -134,7 +134,7 @@ const allServices = [
     tagColor: "bg-teal-50 text-teal-700 border-teal-200",
     icon: FaCouch,
     image:
-      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=85&w=1200&auto=format&fit=crop",
     title: "Sofa & Upholstery",
     description:
       "Deep fabric shampooing, high-suction extraction vacuuming, allergen purging, and upholstery material protection.",
@@ -153,7 +153,7 @@ const allServices = [
     tagColor: "bg-cyan-50 text-cyan-700 border-cyan-200",
     icon: FaBroom,
     image:
-      "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?q=85&w=1200&auto=format&fit=crop",
     title: "Floor Machine Buffing",
     description:
       "Industrial single-disc rotary machine scrubbing, tile grout descaling, and high-gloss buffing for marble, granite, and tiles.",
@@ -172,7 +172,7 @@ const allServices = [
     tagColor: "bg-purple-50 text-purple-700 border-purple-200",
     icon: FaBuilding,
     image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=85&w=1200&auto=format&fit=crop",
     title: "Property Turnover",
     description:
       "Full turnover sanitization for vacant properties, post-lease handovers, rental preparations, and move-in deep detailing.",
@@ -633,7 +633,7 @@ const Home = () => {
                 {/* Cleaner Photo Card */}
                 <div className="rounded-2xl overflow-hidden shadow-lg border border-slate-100 mb-8 aspect-[16/9] bg-slate-100">
                   <img
-                    src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=85&w=1200&auto=format&fit=crop"
+                    src="https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=85&w=1200&auto=format&fit=crop"
                     alt="AS Home Cleaning Specialist in clean home"
                     className="w-full h-full object-cover object-center"
                     loading="lazy"

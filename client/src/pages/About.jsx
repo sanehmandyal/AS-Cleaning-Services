@@ -18,7 +18,7 @@ const values = [
   "100% satisfaction guarantee on every visit",
 ];
 
-const fallbackAboutImg = "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200";
+const fallbackAboutImg = "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1200";
 
 const About = () => {
   useEffect(() => {
@@ -31,7 +31,7 @@ const About = () => {
       <section className="relative bg-slate-900 py-18 sm:py-24 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1920&auto=format&fit=crop"
+            src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1920&auto=format&fit=crop"
             alt="About us background"
             className="w-full h-full object-cover opacity-25"
           />
@@ -100,8 +100,8 @@ const About = () => {
             className="rounded-2xl overflow-hidden shadow-xl border border-slate-100"
           >
             <img
-              src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop"
-              alt="AS Cleaning Services office and workspace"
+              src="https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=85&w=1200&auto=format&fit=crop"
+              alt="AS Cleaning Services specialist cleaning home"
               onError={(e) => {
                 e.currentTarget.onerror = null;
                 e.currentTarget.src = fallbackAboutImg;
