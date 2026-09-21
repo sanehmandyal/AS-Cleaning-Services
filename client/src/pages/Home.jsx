@@ -28,6 +28,9 @@ import {
   FaPaperPlane,
 } from "react-icons/fa";
 import Hero from "../components/Hero";
+import TransformationShowcase from "../components/TransformationShowcase";
+import WaterTankProcess from "../components/WaterTankProcess";
+import InstantEstimator from "../components/InstantEstimator";
 import { contactApi } from "../services/contactApi";
 
 // 8 Unified Professional Services with Authentic Exact-Match Imagery
@@ -444,15 +447,25 @@ const Home = () => {
                   </div>
                 </div>
 
-                {/* Card CTA Button */}
-                <div className="p-5 pt-0">
+                {/* Card CTA Buttons (Book + WhatsApp) */}
+                <div className="p-5 pt-0 flex items-center gap-2">
                   <Link
                     to={service.link}
-                    className="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 px-4 rounded-xl text-xs shadow-sm transition-all hover:scale-[1.01]"
+                    className="flex-1 flex items-center justify-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 px-3 rounded-xl text-xs shadow-sm transition-all hover:scale-[1.01]"
                   >
                     <span>{service.ctaText}</span>
                     <FaArrowRight size={10} />
                   </Link>
+                  <a
+                    href={`https://wa.me/916280016815?text=Hello%20AS%20Cleaning%20Services,%20I%20am%20interested%20in%20${encodeURIComponent(service.title)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 rounded-xl bg-emerald-50 text-[#16A34A] hover:bg-[#16A34A] hover:text-white border border-emerald-200 transition-colors"
+                    title={`Inquire about ${service.title} on WhatsApp`}
+                    aria-label={`Inquire about ${service.title} on WhatsApp`}
+                  >
+                    <FaWhatsapp size={14} />
+                  </a>
                 </div>
               </motion.div>
             ))}
@@ -461,7 +474,16 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 4. WHY CHOOSE AS HOME CLEANING SERVICES (Image 4) */}
+      {/* 3. INTERACTIVE BEFORE & AFTER TRANSFORMATION SHOWCASE */}
+      <TransformationShowcase />
+
+      {/* 4. 5-STAGE SCIENTIFIC WATER TANK CLEANING PROCESS */}
+      <WaterTankProcess />
+
+      {/* 5. INSTANT FREE ESTIMATOR & SCOPE CALCULATOR */}
+      <InstantEstimator />
+
+      {/* 6. WHY CHOOSE AS HOME CLEANING SERVICES (Image 4) */}
       <section id="why-choose-us" className="py-16 sm:py-24 bg-white relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           

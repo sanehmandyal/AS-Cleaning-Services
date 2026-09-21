@@ -30,26 +30,38 @@ const Hero = () => {
           
           {/* Left Hero Column */}
           <div className="lg:col-span-7 flex flex-col justify-center text-left">
-            {/* 1. Rating Pill */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              className="inline-flex items-center gap-2 mb-4 sm:mb-6 w-fit bg-slate-50 border border-slate-200/80 px-3 py-1.5 rounded-full"
-            >
-              <div className="flex items-center text-amber-400 text-xs">
-                {[...Array(5)].map((_, i) => (
-                  <FaStar key={i} />
-                ))}
-              </div>
-              <span className="text-xs sm:text-sm font-semibold text-slate-800">
-                5.0 Rating
-              </span>
-              <span className="text-slate-300">•</span>
-              <span className="text-xs sm:text-sm font-medium text-slate-500">
-                13 Verified Reviews
-              </span>
-            </motion.div>
+            {/* 1. Rating & Live Dispatch Status */}
+            <div className="flex flex-wrap items-center gap-2.5 mb-4 sm:mb-6">
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="inline-flex items-center gap-2 bg-slate-50 border border-slate-200/80 px-3 py-1.5 rounded-full"
+              >
+                <div className="flex items-center text-amber-400 text-xs">
+                  {[...Array(5)].map((_, i) => (
+                    <FaStar key={i} />
+                  ))}
+                </div>
+                <span className="text-xs sm:text-sm font-semibold text-slate-800">
+                  5.0 Rating
+                </span>
+                <span className="text-slate-300">•</span>
+                <span className="text-xs sm:text-sm font-medium text-slate-500">
+                  13 Verified Reviews
+                </span>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                className="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200/80 text-[#16A34A] text-xs font-bold px-3 py-1.5 rounded-full shadow-2xs"
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                <span>Active 24/7 Dispatch Ready</span>
+              </motion.div>
+            </div>
 
             {/* 2. Main Hero Title */}
             <motion.h1
