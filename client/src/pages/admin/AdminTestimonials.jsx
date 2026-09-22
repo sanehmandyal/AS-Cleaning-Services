@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FaTrash, FaCheck, FaTimes, FaStar } from "react-icons/fa";
+import { FaTrash, FaCheck, FaTimes, FaStar, FaPlus } from "react-icons/fa";
 import { testimonialApi } from "../../services/testimonialApi";
 import { Spinner, EmptyState } from "../../components/UIState";
+
+const emptyTestimonial = {
+  name: "",
+  role: "",
+  rating: 5,
+  message: "",
+  isApproved: true,
+};
 
 const AdminTestimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleteId, setDeleteId] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [form, setForm] = useState(emptyTestimonial);
   const [processing, setProcessing] = useState(false);
 
   const load = () => {
@@ -22,6 +32,26 @@ const AdminTestimonials = () => {
     document.title = "Manage Testimonials | Admin | AS Cleaning Services";
     load();
   }, []);
+
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    if (!form.name.trim() || !form.message.trim()) {
+      toast.error("Please enter customer name and review text.");
+      return;
+    }
+    setProcessing(true);
+    try {
+      await testimonialApi.create(form);
+      toast.success("Testimonial created successfully.");
+      setModalOpen(false);
+      setForm(emptyTestimonial);
+      load();
+    } catch (err) {
+      toast.error("Failed to create testimonial.");
+    } finally {
+      setProcessing(false);
+    }
+  };
 
   const toggleApproval = async (t) => {
     try {
@@ -49,7 +79,18 @@ const AdminTestimonials = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-ink mb-6">Manage Testimonials</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold text-ink">Manage Testimonials</h1>
+        <button
+          onClick={() => {
+            setForm(emptyTestimonial);
+            setModalOpen(true);
+          }}
+          className="btn-primary !py-2.5 !px-5 text-sm flex items-center gap-2"
+        >
+          <FaPlus size={12} /> Add Testimonial
+        </button>
+      </div>
 
       <div className="card p-6">
         {loading ? (
@@ -105,6 +146,91 @@ const AdminTestimonials = () => {
                 {processing ? "Deleting..." : "Delete"}
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {modalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+          <div className="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full relative shadow-xl">
+            <button onClick={() => setModalOpen(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+              <FaTimes />
+            </button>
+            <h3 className="text-lg font-bold text-slate-900 mb-4">Add Customer Testimonial</h3>
+            <form onSubmit={handleCreate} className="space-y-4 text-xs sm:text-sm">
+              <div>
+                <label className="block font-semibold text-slate-700 mb-1">Customer Name</label>
+                <input
+                  required
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  placeholder="e.g. Ramesh Sharma"
+                  className="input-field"
+                />
+              </div>
+              <div>
+                <label className="block font-semibold text-slate-700 mb-1">Service / Role Title</label>
+                <input
+                  value={form.role}
+                  onChange={(e) => setForm({ ...form, role: e.target.value })}
+                  placeholder="e.g. Water Tank Cleaning Client"
+                  className="input-field"
+                />
+              </div>
+              <div>
+                <label className="block font-semibold text-slate-700 mb-1">Rating</label>
+                <select
+                  value={form.rating}
+                  onChange={(e) => setForm({ ...form, rating: Number(e.target.value) })}
+                  className="input-field"
+                >
+                  <option value={5}>5 Stars ★★★★★</option>
+                  <option value={4}>4 Stars ★★★★☆</option>
+                  <option value={3}>3 Stars ★★★☆☆</option>
+                  <option value={2}>2 Stars ★★☆☆☆</option>
+                  <option value={1}>1 Star ★☆☆☆☆</option>
+                </select>
+              </div>
+              <div>
+                <label className="block font-semibold text-slate-700 mb-1">Testimonial Review</label>
+                <textarea
+                  required
+                  rows={4}
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  placeholder="Write the customer review message..."
+                  className="input-field"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="isApproved"
+                  checked={form.isApproved}
+                  onChange={(e) => setForm({ ...form, isApproved: e.target.checked })}
+                  className="rounded text-primary focus:ring-primary h-4 w-4"
+                />
+                <label htmlFor="isApproved" className="text-xs font-semibold text-slate-700">
+                  Approve immediately for live public display
+                </label>
+              </div>
+              <div className="flex gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setModalOpen(false)}
+                  className="btn-secondary flex-1 text-xs"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={processing}
+                  className="btn-primary flex-1 text-xs disabled:opacity-60"
+                >
+                  {processing ? "Saving..." : "Save Testimonial"}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

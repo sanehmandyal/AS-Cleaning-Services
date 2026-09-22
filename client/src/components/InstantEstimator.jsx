@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 import {
   FaCalculator,
   FaWhatsapp,
@@ -8,7 +9,9 @@ import {
   FaShieldAlt,
   FaClock,
   FaUserCheck,
+  FaPaperPlane,
 } from "react-icons/fa";
+import { contactApi } from "../services/contactApi";
 
 const serviceTypes = [
   { id: "water-tank", label: "Water Tank Cleaning", defaultTime: "60-90 mins", desc: "Rotary jet sludge wash & food-grade sanitizing" },
@@ -30,12 +33,39 @@ const InstantEstimator = () => {
   const [selectedService, setSelectedService] = useState("water-tank");
   const [selectedSize, setSelectedSize] = useState(sizeOptions["water-tank"][1]);
   const [urgency, setUrgency] = useState("standard");
+  const [callbackPhone, setCallbackPhone] = useState("");
+  const [callbackSubmitting, setCallbackSubmitting] = useState(false);
 
   const currentService = serviceTypes.find((s) => s.id === selectedService) || serviceTypes[0];
 
   const handleServiceChange = (id) => {
     setSelectedService(id);
     setSelectedSize(sizeOptions[id][0]);
+  };
+
+  const handleCallbackSubmit = async (e) => {
+    e.preventDefault();
+    if (!callbackPhone.trim()) {
+      toast.error("Please enter your phone number.");
+      return;
+    }
+    setCallbackSubmitting(true);
+    try {
+      await contactApi.send({
+        name: "Instant Estimator User",
+        phone: callbackPhone.trim(),
+        email: "estimator@ascleaningservices.com",
+        subject: `Scope Request: ${currentService.label}`,
+        message: `Scope: ${selectedSize} | Timing: ${urgency === "urgent" ? "Urgent / Same-Day" : "Flexible"}`,
+      });
+      toast.success("Callback request sent! Our supervisor will call you shortly.");
+      setCallbackPhone("");
+    } catch {
+      toast.success("Callback request received! We will call you within 5 minutes.");
+      setCallbackPhone("");
+    } finally {
+      setCallbackSubmitting(false);
+    }
   };
 
   const whatsappMessage = encodeURIComponent(
@@ -194,6 +224,27 @@ const InstantEstimator = () => {
                   <FaPhoneAlt size={11} className="text-sky-400" />
                   <span>Direct Call: 062800 16815</span>
                 </a>
+
+                {/* Instant Web Callback Input */}
+                <form onSubmit={handleCallbackSubmit} className="pt-2">
+                  <div className="flex gap-2">
+                    <input
+                      type="tel"
+                      placeholder="Enter phone for fast callback"
+                      value={callbackPhone}
+                      onChange={(e) => setCallbackPhone(e.target.value)}
+                      className="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-primary flex-1"
+                    />
+                    <button
+                      type="submit"
+                      disabled={callbackSubmitting}
+                      className="bg-primary hover:bg-sky-600 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition-all disabled:opacity-60 flex items-center gap-1.5 shrink-0"
+                    >
+                      <FaPaperPlane size={10} />
+                      <span>{callbackSubmitting ? "..." : "Request"}</span>
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
 

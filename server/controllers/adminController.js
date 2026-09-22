@@ -8,15 +8,27 @@ const Service = require("../models/Service");
 // @route   GET /api/admin/dashboard
 // @access  Private/Admin
 const getDashboardStats = asyncHandler(async (req, res) => {
-  const [totalBookings, pendingBookings, confirmedBookings, completedBookings, cancelledBookings, totalCustomers] =
-    await Promise.all([
-      Booking.countDocuments(),
-      Booking.countDocuments({ status: "Pending" }),
-      Booking.countDocuments({ status: "Confirmed" }),
-      Booking.countDocuments({ status: "Completed" }),
-      Booking.countDocuments({ status: "Cancelled" }),
-      User.countDocuments({ role: "customer" }),
-    ]);
+  const [
+    totalBookings,
+    pendingBookings,
+    confirmedBookings,
+    completedBookings,
+    cancelledBookings,
+    totalCustomers,
+    unreadMessages,
+    totalMessages,
+    totalServices,
+  ] = await Promise.all([
+    Booking.countDocuments(),
+    Booking.countDocuments({ status: "Pending" }),
+    Booking.countDocuments({ status: "Confirmed" }),
+    Booking.countDocuments({ status: "Completed" }),
+    Booking.countDocuments({ status: "Cancelled" }),
+    User.countDocuments({ role: "customer" }),
+    Contact.countDocuments({ status: "New" }),
+    Contact.countDocuments(),
+    Service.countDocuments(),
+  ]);
 
   const revenueAgg = await Booking.aggregate([
     { $match: { status: "Completed" } },
@@ -66,7 +78,9 @@ const getDashboardStats = asyncHandler(async (req, res) => {
       completedBookings,
       cancelledBookings,
       totalCustomers,
-      totalServices: await Service.countDocuments(),
+      totalServices,
+      unreadMessages,
+      totalMessages,
       totalRevenue,
       monthlyBookings,
       servicePopularity,

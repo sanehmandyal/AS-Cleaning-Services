@@ -5,12 +5,27 @@ const Contact = require("../models/Contact");
 // @route   POST /api/contact
 // @access  Public
 const createContact = asyncHandler(async (req, res) => {
-  const { name, email, phone, subject, message } = req.body;
-  if (!name || !email || !subject || !message) {
+  let { name, email, phone, subject, message } = req.body;
+
+  if (!name && !phone) {
     res.status(400);
-    throw new Error("Please fill in all required fields");
+    throw new Error("Please provide your name or phone number");
   }
-  const contact = await Contact.create({ name, email, phone, subject, message });
+
+  name = (name || "Customer").trim();
+  email = (email || "inquiry@ascleaningservices.com").trim();
+  phone = (phone || "").trim();
+  subject = (subject || "Service Inquiry").trim();
+  message = (message || "Customer requested contact via website.").trim();
+
+  const contact = await Contact.create({
+    name,
+    email,
+    phone,
+    subject,
+    message,
+    status: "New",
+  });
   res.status(201).json({ success: true, data: contact });
 });
 

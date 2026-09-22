@@ -11,9 +11,11 @@ import {
   FaClock,
   FaWhatsapp,
 } from "react-icons/fa";
+import { useAuth } from "../context/AuthContext";
 import Logo from "./Logo";
 
 const Footer = () => {
+  const { isAuthenticated, isAdmin } = useAuth();
   const year = new Date().getFullYear();
 
   return (
@@ -164,13 +166,23 @@ const Footer = () => {
           <p>© {year} AS Cleaning Services. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <p className="text-slate-400 font-medium">Clean Spaces • Healthy Lives</p>
-            <Link
-              to="/login"
-              className="text-slate-500 hover:text-sky-400 transition-colors inline-flex items-center gap-1 border-l border-slate-800 pl-4"
-              title="Admin Login Portal"
-            >
-              🔒 Admin Access
-            </Link>
+            {isAuthenticated && isAdmin ? (
+              <Link
+                to="/admin"
+                className="text-primary hover:text-sky-300 font-semibold transition-colors inline-flex items-center gap-1 border-l border-slate-800 pl-4"
+                title="Admin Management Console"
+              >
+                ⚡ Admin Console
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                className="text-slate-500 hover:text-sky-400 transition-colors inline-flex items-center gap-1 border-l border-slate-800 pl-4"
+                title="Admin Login Portal"
+              >
+                🔒 Admin Access
+              </Link>
+            )}
           </div>
         </div>
       </div>

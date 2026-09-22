@@ -12,6 +12,7 @@ import {
   FaSignOutAlt,
   FaBars,
   FaTimes,
+  FaExternalLinkAlt,
 } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 import Logo from "../components/Logo";
@@ -113,6 +114,13 @@ const AdminLayout = () => {
             Admin Management Console
           </div>
           <div className="flex items-center gap-3">
+            <Link
+              to="/"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-primary bg-slate-100 hover:bg-sky-50 px-3 py-1.5 rounded-lg transition-colors"
+            >
+              <FaExternalLinkAlt size={10} />
+              <span>Live Website</span>
+            </Link>
             <div className="text-right hidden sm:block">
               <p className="text-xs font-bold text-slate-800 leading-tight">
                 {user?.name || "Admin"}

@@ -32,6 +32,7 @@ import TransformationShowcase from "../components/TransformationShowcase";
 import WaterTankProcess from "../components/WaterTankProcess";
 import InstantEstimator from "../components/InstantEstimator";
 import { contactApi } from "../services/contactApi";
+import { testimonialApi } from "../services/testimonialApi";
 
 // 8 Unified Professional Services with Authentic Exact-Match Imagery
 const allServices = [
@@ -299,6 +300,7 @@ const faqsData = [
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [openFaq, setOpenFaq] = useState(null);
+  const [displayReviews, setDisplayReviews] = useState(googleReviews);
   const [quickForm, setQuickForm] = useState({
     name: "",
     phone: "",
@@ -309,6 +311,38 @@ const Home = () => {
 
   useEffect(() => {
     document.title = "AS Home Cleaning Services | Clean Spaces • Healthy Lives";
+    testimonialApi
+      .getAll()
+      .then((res) => {
+        if (res.data?.data && res.data.data.length > 0) {
+          const colors = [
+            "bg-sky-100 text-sky-800",
+            "bg-emerald-100 text-emerald-800",
+            "bg-indigo-100 text-indigo-800",
+            "bg-amber-100 text-amber-800",
+            "bg-purple-100 text-purple-800",
+          ];
+          const formatted = res.data.data.map((t, idx) => {
+            const initials = t.name
+              .split(" ")
+              .map((w) => w[0])
+              .filter(Boolean)
+              .join("")
+              .slice(0, 2)
+              .toUpperCase();
+            return {
+              initials: initials || "CL",
+              initialBg: colors[idx % colors.length],
+              name: t.name,
+              role: t.role || "Verified Customer",
+              rating: t.rating || 5,
+              text: t.message,
+            };
+          });
+          setDisplayReviews(formatted);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const filteredServices = allServices.filter((s) => {
@@ -560,9 +594,9 @@ const Home = () => {
             </div>
           </div>
 
-          {/* 3 Google Review Cards */}
+          {/* Customer Reviews Cards (Dynamic from Admin / Google) */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {googleReviews.map((rev, i) => (
+            {displayReviews.slice(0, 3).map((rev, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 16 }}
