@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   FaBars,
   FaTimes,
@@ -36,6 +38,21 @@ const Navbar = () => {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
 
   const handleLogout = () => {
     logout();
@@ -212,95 +229,113 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Drawer */}
-      {open && (
-        <div
-          className="fixed inset-0 z-[60] bg-slate-950/60 backdrop-blur-sm lg:hidden transition-opacity"
-          onClick={() => setOpen(false)}
-        >
-          <div
-            className="absolute right-0 top-0 h-full w-[85vw] max-w-xs bg-white shadow-2xl p-5 sm:p-6 flex flex-col justify-between animate-fadeUp overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div>
-              <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
-                <Logo size="small" showTagline={false} />
-                <button
+      {/* Mobile Drawer (Portaled to document.body to prevent containing-block containment by header backdrop-blur) */}
+      {typeof document !== "undefined" &&
+        createPortal(
+          <AnimatePresence>
+            {open && (
+              <div className="fixed inset-0 z-[9999] lg:hidden">
+                {/* Backdrop Overlay */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm"
                   onClick={() => setOpen(false)}
-                  className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition-colors"
-                  aria-label="Close menu"
+                />
+
+                {/* Sliding Drawer Panel */}
+                <motion.div
+                  initial={{ x: "100%" }}
+                  animate={{ x: 0 }}
+                  exit={{ x: "100%" }}
+                  transition={{ type: "spring", damping: 28, stiffness: 260 }}
+                  className="fixed right-0 top-0 bottom-0 h-full w-[85vw] max-w-xs bg-white shadow-2xl flex flex-col justify-between overflow-y-auto z-10"
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  <FaTimes size={16} />
-                </button>
-              </div>
+                  <div className="p-5 sm:p-6">
+                    <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
+                      <Logo size="small" showTagline={false} />
+                      <button
+                        onClick={() => setOpen(false)}
+                        className="w-9 h-9 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors"
+                        aria-label="Close menu"
+                      >
+                        <FaTimes size={16} />
+                      </button>
+                    </div>
 
-              {/* Mobile Nav Links */}
-              <div className="flex flex-col gap-1">
-                {navLinks.map((link) => {
-                  const isHash = link.to.startsWith("/#");
-                  const isActive = !isHash && location.pathname === link.to;
+                    {/* Mobile Nav Links */}
+                    <div className="flex flex-col gap-1">
+                      {navLinks.map((link) => {
+                        const isHash = link.to.startsWith("/#");
+                        const isActive = !isHash && location.pathname === link.to;
 
-                  return isHash ? (
+                        return isHash ? (
+                          <a
+                            key={link.to}
+                            href={link.to}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleNavClick(link.to);
+                            }}
+                            className="text-sm font-semibold py-2.5 px-3.5 rounded-lg text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-between"
+                          >
+                            <span>{link.label}</span>
+                            <FaArrowRight size={10} className="text-slate-300" />
+                          </a>
+                        ) : (
+                          <NavLink
+                            key={link.to}
+                            to={link.to}
+                            onClick={() => setOpen(false)}
+                            className={({ isActive }) =>
+                              `text-sm font-semibold py-2.5 px-3.5 rounded-lg transition-colors flex items-center justify-between ${
+                                isActive
+                                  ? "bg-sky-50 text-primary font-bold"
+                                  : "text-slate-700 hover:bg-slate-50"
+                              }`
+                            }
+                          >
+                            <span>{link.label}</span>
+                            <FaArrowRight size={10} className="text-slate-300" />
+                          </NavLink>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Mobile Footer CTAs */}
+                  <div className="p-5 sm:p-6 pt-4 border-t border-slate-100 flex flex-col gap-2.5 bg-slate-50/60 mt-auto">
                     <a
-                      key={link.to}
-                      href={link.to}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavClick(link.to);
-                      }}
-                      className="text-sm font-semibold py-2.5 px-3.5 rounded-lg text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-between"
+                      href="tel:06280016815"
+                      className="flex items-center justify-center gap-2 bg-slate-900 text-white font-semibold py-2.5 rounded-lg text-sm shadow-xs"
                     >
-                      <span>{link.label}</span>
-                      <FaArrowRight size={10} className="text-slate-300" />
+                      <FaPhoneAlt size={12} className="text-sky-400" /> Call: 062800 16815
                     </a>
-                  ) : (
-                    <NavLink
-                      key={link.to}
-                      to={link.to}
-                      onClick={() => setOpen(false)}
-                      className={({ isActive }) =>
-                        `text-sm font-semibold py-2.5 px-3.5 rounded-lg transition-colors flex items-center justify-between ${
-                          isActive
-                            ? "bg-sky-50 text-primary font-bold"
-                            : "text-slate-700 hover:bg-slate-50"
-                        }`
-                      }
+                    <a
+                      href="https://wa.me/916280016815"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 bg-[#16A34A] text-white font-semibold py-2.5 rounded-lg text-sm shadow-xs"
                     >
-                      <span>{link.label}</span>
-                      <FaArrowRight size={10} className="text-slate-300" />
-                    </NavLink>
-                  );
-                })}
+                      <FaWhatsapp size={15} /> WhatsApp Us
+                    </a>
+                    <Link
+                      to="/booking"
+                      onClick={() => setOpen(false)}
+                      className="btn-primary w-full text-center text-sm !py-2.5 shadow-xs"
+                    >
+                      Get a Free Quote
+                    </Link>
+                  </div>
+                </motion.div>
               </div>
-            </div>
-
-            {/* Mobile Footer CTAs */}
-            <div className="pt-4 border-t border-slate-100 flex flex-col gap-2.5 mt-6">
-              <a
-                href="tel:06280016815"
-                className="flex items-center justify-center gap-2 bg-slate-900 text-white font-semibold py-2.5 rounded-lg text-sm shadow-xs"
-              >
-                <FaPhoneAlt size={12} className="text-sky-400" /> Call: 062800 16815
-              </a>
-              <a
-                href="https://wa.me/916280016815"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-[#16A34A] text-white font-semibold py-2.5 rounded-lg text-sm shadow-xs"
-              >
-                <FaWhatsapp size={15} /> WhatsApp Us
-              </a>
-              <Link
-                to="/booking"
-                onClick={() => setOpen(false)}
-                className="btn-primary w-full text-center text-sm !py-2.5 shadow-xs"
-              >
-                Get a Free Quote
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
     </header>
   );
 };
