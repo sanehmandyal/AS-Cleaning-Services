@@ -78,11 +78,12 @@ const Navbar = () => {
   };
 
   return (
-    <header
-      className={`sticky top-0 z-50 bg-white/95 backdrop-blur-md transition-all duration-200 border-b ${
-        scrolled ? "border-slate-200/90 shadow-sm" : "border-slate-100"
-      }`}
-    >
+    <>
+      <header
+        className={`sticky top-0 z-50 bg-white/95 backdrop-blur-md transition-all duration-200 border-b ${
+          scrolled ? "border-slate-200/90 shadow-sm" : "border-slate-100"
+        }`}
+      >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20 gap-2 lg:gap-4">
           {/* Brand Logo */}
@@ -228,13 +229,14 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+    </header>
 
       {/* Mobile Drawer (Portaled to document.body to prevent containing-block containment by header backdrop-blur) */}
       {typeof document !== "undefined" &&
         createPortal(
           <AnimatePresence>
             {open && (
-              <div className="fixed inset-0 z-[9999] lg:hidden">
+              <div className="fixed inset-0 z-[99999] lg:hidden">
                 {/* Backdrop Overlay */}
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -336,7 +338,7 @@ const Navbar = () => {
           </AnimatePresence>,
           document.body
         )}
-    </header>
+    </>
   );
 };
 
