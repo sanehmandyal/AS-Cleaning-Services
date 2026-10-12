@@ -19,7 +19,7 @@ const FloatingContact = () => {
         href="https://wa.me/916280016815?text=Hello%20AS%20Cleaning%20Services,%20I%20would%20like%20to%20inquire%20about%20your%20cleaning%20services"
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white h-12 px-4.5 rounded-full shadow-2xl border border-emerald-400/40 transition-all hover:scale-105 active:scale-95 group shrink-0"
+        className="flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white h-12 px-5 rounded-full shadow-2xl border border-emerald-400/40 transition-all hover:scale-105 active:scale-95 group shrink-0"
         title="Chat on WhatsApp"
         aria-label="Chat on WhatsApp"
       >
