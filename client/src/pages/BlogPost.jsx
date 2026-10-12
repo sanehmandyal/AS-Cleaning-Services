@@ -39,7 +39,7 @@ const fallbackBlogs = [
     excerpt: "A complete guide on the optimal deep-cleaning frequency for every room and lifestyle.",
     content:
       "While routine sweeping and weekly surface dusting maintain basic order, microscopic dust, grease, and moisture demand periodic deep intervention. For typical households in Zirakpur and Mohali, we recommend an intensive deep clean every 3 to 6 months. High-humidity zones like bathrooms require bi-monthly descaling to eliminate lime deposits from groundwater, while rooftop and underground water storage reservoirs must be drained and sterilized every 6 months to prevent microbial slime. Before festivals or rental tenant turnovers, an exhaustive move-in clean restores high hygiene standards.",
-    image: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=80&w=1200",
+    image: "/images/services/deep-cleaning.jpg",
     author: "AS Cleaning Team",
     publishedDate: new Date(),
   },

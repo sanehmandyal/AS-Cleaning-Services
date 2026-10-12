@@ -113,11 +113,11 @@ const About = () => {
             className="rounded-2xl overflow-hidden shadow-xl border border-slate-100"
           >
             <img
-              src="https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=85&w=1200&auto=format&fit=crop"
+              src="/images/services/property-cleaning.jpg"
               alt="AS Cleaning Services specialist cleaning home"
               onError={(e) => {
                 e.currentTarget.onerror = null;
-                e.currentTarget.src = fallbackAboutImg;
+                e.currentTarget.src = "/images/services/deep-cleaning.jpg";
               }}
               className="w-full h-72 sm:h-96 lg:h-[440px] object-cover"
               loading="lazy"

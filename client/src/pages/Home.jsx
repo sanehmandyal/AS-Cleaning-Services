@@ -699,10 +699,13 @@ const Home = () => {
                 {/* Cleaner Photo Card */}
                 <div className="rounded-2xl overflow-hidden shadow-lg border border-slate-100 mb-8 aspect-[16/9] bg-slate-100">
                   <img
-                    src="https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=85&w=1200&auto=format&fit=crop"
-                    alt="AS Home Cleaning Specialist in clean home"
+                    src="/images/services/property-cleaning.jpg"
+                    alt="AS Home Cleaning Specialist providing meticulous property cleaning"
                     className="w-full h-full object-cover object-center"
                     loading="lazy"
+                    onError={(e) => {
+                      e.currentTarget.src = "/images/services/deep-cleaning.jpg";
+                    }}
                   />
                 </div>
 

@@ -53,7 +53,7 @@ const services = [
     icon: "FaHome",
     shortDescription: "Comprehensive recurring and one-off house sanitation including bedrooms, balconies, and living rooms.",
     description: "Comprehensive recurring or one-off house sanitation covering bedrooms, balconies, living halls, and family living zones.",
-    image: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=85&w=1200&auto=format&fit=crop",
+    image: "/images/services/home-cleaning.jpg",
     price: 0,
     duration: "3-5 hours",
     features: ["Full bedroom & living room dust extraction", "Window frames & balconies", "Ceiling fans & fixtures", "Eco-friendly safe deodorization"],

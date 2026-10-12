@@ -33,7 +33,7 @@ const defaultBlogs = [
     title: "How Often Should You Deep Clean Your Home?",
     category: "Home Care",
     excerpt: "A complete guide on the optimal deep-cleaning frequency for every room and lifestyle.",
-    image: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=80&w=800",
+    image: "/images/services/deep-cleaning.jpg",
     author: "AS Cleaning Team",
     publishedDate: new Date(),
   },
