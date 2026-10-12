@@ -110,48 +110,113 @@ const AdminBlog = () => {
         ) : blogs.length === 0 ? (
           <EmptyState title="No blog posts yet" />
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="text-left text-ink/40 border-b border-gray-100">
-                  <th className="py-3 pr-4 font-medium">Title</th>
-                  <th className="py-3 pr-4 font-medium">Category</th>
-                  <th className="py-3 pr-4 font-medium">Author</th>
-                  <th className="py-3 pr-4 font-medium">Status</th>
-                  <th className="py-3 pr-4 font-medium">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {blogs.map((b) => (
-                  <tr key={b._id} className="border-b border-gray-50 last:border-0">
-                    <td className="py-3 pr-4 font-medium text-ink max-w-xs truncate">{b.title}</td>
-                    <td className="py-3 pr-4">{b.category}</td>
-                    <td className="py-3 pr-4">{b.author}</td>
-                    <td className="py-3 pr-4">
-                      <button
-                        onClick={() => togglePublish(b)}
-                        className={`text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5 ${
-                          b.published ? "bg-green-50 text-success" : "bg-gray-100 text-ink/50"
-                        }`}
-                      >
-                        {b.published ? <FaEye size={10} /> : <FaEyeSlash size={10} />}
-                        {b.published ? "Published" : "Draft"}
-                      </button>
-                    </td>
-                    <td className="py-3 pr-4">
-                      <div className="flex items-center gap-3">
-                        <button onClick={() => openEdit(b)} className="text-primary hover:text-primary-dark" aria-label="Edit post">
-                          <FaEdit />
-                        </button>
-                        <button onClick={() => setDeleteId(b._id)} className="text-red-400 hover:text-red-600" aria-label="Delete post">
-                          <FaTrash />
-                        </button>
+          <div>
+            {/* Mobile Card List View (Visible on Phones < 640px) */}
+            <div className="block sm:hidden space-y-3">
+              {blogs.map((b) => (
+                <div
+                  key={b._id}
+                  className="p-3.5 rounded-xl border border-slate-100 bg-slate-50/50 space-y-2.5"
+                >
+                  <div className="flex items-start gap-3">
+                    {b.image && (
+                      <div className="w-16 h-14 rounded-lg bg-slate-200 overflow-hidden shrink-0 border border-slate-200">
+                        <img
+                          src={b.image}
+                          alt={b.title}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.target.style.display = "none";
+                          }}
+                        />
                       </div>
-                    </td>
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <h4 className="font-semibold text-slate-900 text-xs sm:text-sm line-clamp-2">
+                        {b.title}
+                      </h4>
+                      <p className="text-[11px] text-slate-400 mt-0.5">
+                        {b.category || "General"} • {b.author || "AS Team"}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-2 border-t border-slate-200/60">
+                    <button
+                      onClick={() => togglePublish(b)}
+                      className={`text-[11px] font-semibold px-2.5 py-1 rounded-full flex items-center gap-1 ${
+                        b.published ? "bg-green-100/70 text-emerald-700" : "bg-slate-200/70 text-slate-600"
+                      }`}
+                    >
+                      {b.published ? <FaEye size={10} /> : <FaEyeSlash size={10} />}
+                      <span>{b.published ? "Published" : "Draft"}</span>
+                    </button>
+
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => openEdit(b)}
+                        className="text-primary hover:text-sky-700 p-1 text-sm"
+                        aria-label="Edit post"
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        onClick={() => setDeleteId(b._id)}
+                        className="text-red-400 hover:text-red-600 p-1 text-sm"
+                        aria-label="Delete post"
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop / Tablet Table View (Visible on sm: screens and up) */}
+            <div className="hidden sm:block overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left text-ink/40 border-b border-gray-100">
+                    <th className="py-3 pr-4 font-medium">Title</th>
+                    <th className="py-3 pr-4 font-medium">Category</th>
+                    <th className="py-3 pr-4 font-medium">Author</th>
+                    <th className="py-3 pr-4 font-medium">Status</th>
+                    <th className="py-3 pr-4 font-medium">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {blogs.map((b) => (
+                    <tr key={b._id} className="border-b border-gray-50 last:border-0">
+                      <td className="py-3 pr-4 font-medium text-ink max-w-xs truncate">{b.title}</td>
+                      <td className="py-3 pr-4">{b.category}</td>
+                      <td className="py-3 pr-4">{b.author}</td>
+                      <td className="py-3 pr-4">
+                        <button
+                          onClick={() => togglePublish(b)}
+                          className={`text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5 ${
+                            b.published ? "bg-green-50 text-success" : "bg-gray-100 text-ink/50"
+                          }`}
+                        >
+                          {b.published ? <FaEye size={10} /> : <FaEyeSlash size={10} />}
+                          {b.published ? "Published" : "Draft"}
+                        </button>
+                      </td>
+                      <td className="py-3 pr-4">
+                        <div className="flex items-center gap-3">
+                          <button onClick={() => openEdit(b)} className="text-primary hover:text-primary-dark" aria-label="Edit post">
+                            <FaEdit />
+                          </button>
+                          <button onClick={() => setDeleteId(b._id)} className="text-red-400 hover:text-red-600" aria-label="Delete post">
+                            <FaTrash />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>
