@@ -15,7 +15,7 @@ const fallbackBlogs = [
     excerpt: "Simple daily habits that keep your home looking fresh and tidy between professional visits.",
     content:
       "Maintaining a clean home between professional visits doesn't have to be difficult. Start with a nightly 10-minute tidy-up where the entire family resets common rooms. Wipe down kitchen counters and stovetops immediately after every cooking session to prevent grease buildup. Keep a caddy of microfiber cloths and vinegar-based spray in each bathroom for quick 2-minute sink touch-ups. Lastly, run a high-efficiency particulate air (HEPA) vacuum across high-traffic carpets and rugs twice a week to keep dust mites and outdoor allergens from settling deep into upholstery.",
-    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1200",
+    image: "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?q=80&w=1200",
     author: "AS Cleaning Team",
     publishedDate: new Date(),
   },
@@ -45,7 +45,7 @@ const fallbackBlogs = [
   },
 ];
 
-const fallbackImg = "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1200";
+const fallbackImg = "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?q=80&w=1200";
 
 const BlogPost = () => {
   const { slug } = useParams();

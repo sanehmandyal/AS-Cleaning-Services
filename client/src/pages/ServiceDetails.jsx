@@ -145,7 +145,7 @@ const ServiceDetails = () => {
           className="w-full h-full object-cover opacity-40 scale-105"
           onError={(e) => {
             e.currentTarget.src =
-              "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=85&w=1200&auto=format&fit=crop";
+              "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?q=85&w=1200&auto=format&fit=crop";
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent" />

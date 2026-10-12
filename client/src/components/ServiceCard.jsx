@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import * as FaIcons from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
 
-const fallbackImg = "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=800";
+const fallbackImg = "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?q=80&w=800";
 
 const ServiceCard = ({ service, index = 0 }) => {
   const Icon = FaIcons[service.icon] || FaIcons.FaBroom;

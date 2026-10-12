@@ -13,7 +13,7 @@ const defaultBlogs = [
     title: "5 Tips to Keep Your Home Clean Between Visits",
     category: "Cleaning Tips",
     excerpt: "Simple daily habits that keep your home looking fresh and tidy between professional visits.",
-    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=800",
+    image: "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?q=80&w=800",
     author: "AS Cleaning Team",
     publishedDate: new Date(),
   },
@@ -39,7 +39,7 @@ const defaultBlogs = [
   },
 ];
 
-const fallbackImg = "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=800";
+const fallbackImg = "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?q=80&w=800";
 
 const SkeletonBlog = () => (
   <div className="card overflow-hidden animate-pulse">

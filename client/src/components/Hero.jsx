@@ -150,12 +150,12 @@ const Hero = () => {
               {/* Main Photo Card */}
               <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border-2 sm:border-4 border-white bg-slate-100 aspect-[4/5] sm:aspect-[1/1] lg:aspect-[4/5]">
                 <img
-                  src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=85&w=1200&auto=format&fit=crop"
-                  alt="Professional AS Cleaning specialist cleaning shelves in uniform"
+                  src="https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?q=85&w=1200&auto=format&fit=crop"
+                  alt="AS Cleaning Services trained professional cleaner providing spotless sanitation"
                   className="w-full h-full object-cover object-center"
                   loading="eager"
                   onError={(e) => {
-                    e.currentTarget.src = "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=80&w=1200";
+                    e.currentTarget.src = "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?q=85&w=1200&auto=format&fit=crop";
                   }}
                 />
 

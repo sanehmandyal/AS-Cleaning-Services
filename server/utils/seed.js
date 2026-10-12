@@ -20,7 +20,7 @@ const services = [
     icon: "FaBroom",
     shortDescription: "Complete intensive sanitization for switchboards, hard-to-reach areas, baseboards, and deep grime.",
     description: "Our deep cleaning service reaches every corner — behind appliances, inside cabinets, baseboards, switchboards and grout — providing a thorough reset for your home or office.",
-    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=85&w=1200&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?q=85&w=1200&auto=format&fit=crop",
     price: 0,
     duration: "4-6 hours",
     features: ["Behind appliances", "Baseboards & grout", "Inside cabinets", "Detailed sanitizing"],

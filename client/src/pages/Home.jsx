@@ -456,7 +456,7 @@ const Home = () => {
                       loading="lazy"
                       onError={(e) => {
                         e.currentTarget.src =
-                          "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=800";
+                          "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?q=80&w=800";
                       }}
                     />
                     <div className="absolute top-3 left-3">

@@ -178,7 +178,7 @@ const Booking = () => {
       <section className="relative bg-slate-900 py-18 sm:py-24 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1920&auto=format&fit=crop"
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920&auto=format&fit=crop"
             alt="Booking background"
             className="w-full h-full object-cover opacity-25"
           />
