@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaCheckCircle, FaArrowRight } from "react-icons/fa";
+import SEOHead from "../components/SEOHead";
+import { buildBreadcrumbSchema } from "../utils/seoSchema";
 
 const stats = [
   { value: "5+", label: "Years of Experience" },
@@ -25,8 +27,19 @@ const About = () => {
     document.title = "About Us | AS Cleaning Services";
   }, []);
 
+  const breadcrumbs = [
+    { name: "Home", url: "/" },
+    { name: "About Us", url: "/about" },
+  ];
+
   return (
     <div className="relative overflow-hidden bg-white">
+      <SEOHead
+        title="About Us | Professional Cleaning Team"
+        description="Learn about AS Cleaning Services. Dedicated to high standards, police background-checked crew, and eco-friendly cleaning across Zirakpur, Mohali & Chandigarh."
+        canonicalPath="/about"
+        schema={buildBreadcrumbSchema(breadcrumbs)}
+      />
       {/* Top Banner with Background Image */}
       <section className="relative bg-slate-900 py-18 sm:py-24 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">

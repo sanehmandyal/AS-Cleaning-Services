@@ -73,7 +73,7 @@ const InstantEstimator = () => {
   );
 
   return (
-    <section className="py-16 sm:py-24 bg-slate-50/80 border-t border-b border-slate-200/70 relative">
+    <section id="estimator" className="py-16 sm:py-24 bg-slate-50/80 border-t border-b border-slate-200/70 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}

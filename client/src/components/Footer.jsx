@@ -89,38 +89,43 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm text-slate-400">
               <li>
-                <Link to="/booking?service=deep-cleaning" className="hover:text-primary transition-colors">
+                <Link to="/services/deep-cleaning" className="hover:text-primary transition-colors">
                   Deep Cleaning
                 </Link>
               </li>
               <li>
-                <Link to="/booking?service=water-tank-cleaning" className="hover:text-primary transition-colors">
+                <Link to="/services/water-tank-cleaning" className="hover:text-primary transition-colors">
                   Water Tank Cleaning
                 </Link>
               </li>
               <li>
-                <Link to="/booking?service=home-cleaning" className="hover:text-primary transition-colors">
-                  Home Cleaning
+                <Link to="/services/home-cleaning" className="hover:text-primary transition-colors">
+                  Home & Villa Cleaning
                 </Link>
               </li>
               <li>
-                <Link to="/booking?service=bathroom-cleaning" className="hover:text-primary transition-colors">
+                <Link to="/services/bathroom-cleaning" className="hover:text-primary transition-colors">
                   Bathroom Cleaning
                 </Link>
               </li>
               <li>
-                <Link to="/booking?service=kitchen-cleaning" className="hover:text-primary transition-colors">
+                <Link to="/services/kitchen-cleaning" className="hover:text-primary transition-colors">
                   Kitchen Degreasing
                 </Link>
               </li>
               <li>
-                <Link to="/booking?service=sofa-cleaning" className="hover:text-primary transition-colors">
+                <Link to="/services/sofa-cleaning" className="hover:text-primary transition-colors">
                   Sofa & Upholstery
                 </Link>
               </li>
               <li>
-                <Link to="/booking?service=floor-cleaning" className="hover:text-primary transition-colors">
+                <Link to="/services/floor-cleaning" className="hover:text-primary transition-colors">
                   Floor Machine Buffing
+                </Link>
+              </li>
+              <li>
+                <Link to="/services/property-cleaning" className="hover:text-primary transition-colors">
+                  Property Turnover Cleaning
                 </Link>
               </li>
             </ul>

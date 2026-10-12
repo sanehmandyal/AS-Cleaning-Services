@@ -4,6 +4,8 @@ import * as FaIcons from "react-icons/fa";
 import { FaCheck, FaArrowRight } from "react-icons/fa";
 import { serviceApi } from "../services/serviceApi";
 import { Spinner, ErrorState } from "../components/UIState";
+import SEOHead from "../components/SEOHead";
+import { buildBreadcrumbSchema } from "../utils/seoSchema";
 
 const defaultPricing = [
   {
@@ -67,8 +69,19 @@ const Pricing = () => {
       .finally(() => setLoading(false));
   }, []);
 
+  const breadcrumbs = [
+    { name: "Home", url: "/" },
+    { name: "Pricing", url: "/pricing" },
+  ];
+
   return (
     <div>
+      <SEOHead
+        title="Transparent Pricing & Cleaning Packages"
+        description="Affordable and transparent cleaning rates for homes, apartments, water tanks, and commercial spaces across Zirakpur, Mohali & Chandigarh."
+        canonicalPath="/pricing"
+        schema={buildBreadcrumbSchema(breadcrumbs)}
+      />
       <section className="bg-gradient-to-b from-sky-50 to-white py-16 sm:py-20 border-b border-slate-100">
         <div className="container-x text-center max-w-2xl mx-auto">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-2">

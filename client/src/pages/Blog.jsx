@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { FaArrowRight, FaCalendarAlt, FaUser } from "react-icons/fa";
 import { blogApi } from "../services/blogApi";
 import { EmptyState, ErrorState } from "../components/UIState";
+import SEOHead from "../components/SEOHead";
+import { buildBreadcrumbSchema } from "../utils/seoSchema";
 
 const defaultBlogs = [
   {
@@ -69,8 +71,19 @@ const Blog = () => {
       .finally(() => setLoading(false));
   }, []);
 
+  const breadcrumbs = [
+    { name: "Home", url: "/" },
+    { name: "Blog", url: "/blog" },
+  ];
+
   return (
     <div className="relative overflow-hidden">
+      <SEOHead
+        title="Cleaning Tips, Guides & Hygiene Insights"
+        description="Expert cleaning advice, eco-friendly maintenance habits, and deep cleaning guides from the AS Cleaning Services professional crew in Zirakpur & Tricity."
+        canonicalPath="/blog"
+        schema={buildBreadcrumbSchema(breadcrumbs)}
+      />
       {/* Background Graphic Accents */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-sky-100/40 rounded-full blur-3xl -z-10 pointer-events-none" />
       <div className="absolute top-1/2 left-0 w-80 h-80 bg-blue-100/30 rounded-full blur-3xl -z-10 pointer-events-none" />

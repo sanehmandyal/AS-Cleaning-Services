@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaBroom } from "react-icons/fa";
+import SEOHead from "../components/SEOHead";
 
 const NotFound = () => {
-  useEffect(() => {
-    document.title = "Page Not Found | AS Cleaning Services";
-  }, []);
-
   return (
     <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4">
+      <SEOHead
+        title="404 - Page Not Found"
+        description="The requested page could not be found. Return to AS Cleaning Services home or explore our professional cleaning services."
+      />
       <p className="text-7xl font-bold text-primary-light mb-2">404</p>
       <h1 className="text-2xl font-bold text-ink mb-3">Page Not Found</h1>
       <p className="text-ink/60 mb-8 max-w-sm">

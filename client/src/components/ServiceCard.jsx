@@ -18,10 +18,14 @@ const ServiceCard = ({ service, index = 0 }) => {
       className="card-hover overflow-hidden flex flex-col justify-between group"
     >
       <div>
-        <div className="relative h-48 sm:h-52 overflow-hidden bg-slate-100">
+        <Link
+          to={`/services/${service.slug || service._id}`}
+          className="relative block h-48 sm:h-52 overflow-hidden bg-slate-100"
+          title={`View details for ${service.title}`}
+        >
           <img
             src={service.image || fallbackImg}
-            alt={service.title}
+            alt={`${service.title} - AS Cleaning Services`}
             onError={(e) => {
               e.currentTarget.onerror = null;
               e.currentTarget.src = fallbackImg;
@@ -29,14 +33,16 @@ const ServiceCard = ({ service, index = 0 }) => {
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             loading="lazy"
           />
-        </div>
+        </Link>
         <div className="p-5 sm:p-6">
           <div className="flex items-center gap-2.5 mb-2.5">
             <span className="w-8 h-8 rounded-lg bg-sky-50 text-primary flex items-center justify-center text-sm shrink-0">
               <Icon />
             </span>
             <h3 className="font-display font-bold text-base sm:text-lg text-slate-900 group-hover:text-primary transition-colors">
-              {service.title}
+              <Link to={`/services/${service.slug || service._id}`}>
+                {service.title}
+              </Link>
             </h3>
           </div>
           <p className="text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-3">

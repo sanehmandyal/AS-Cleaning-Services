@@ -33,6 +33,8 @@ import WaterTankProcess from "../components/WaterTankProcess";
 import InstantEstimator from "../components/InstantEstimator";
 import { contactApi } from "../services/contactApi";
 import { testimonialApi } from "../services/testimonialApi";
+import SEOHead from "../components/SEOHead";
+import { buildLocalBusinessSchema } from "../utils/seoSchema";
 
 // 8 Unified Professional Services with Authentic Exact-Match Imagery
 const allServices = [
@@ -381,6 +383,12 @@ const Home = () => {
 
   return (
     <div className="relative overflow-hidden bg-white">
+      <SEOHead
+        title="Professional Cleaning Services in Zirakpur, Mohali & Chandigarh"
+        description="AS Cleaning Services provides residential home, water tank, bathroom, kitchen, sofa, and deep cleaning services across Zirakpur, Mohali, Chandigarh & Tricity. Call 062800 16815."
+        canonicalPath="/"
+        schema={buildLocalBusinessSchema()}
+      />
       {/* 1. HERO SECTION */}
       <Hero />
 
@@ -436,11 +444,16 @@ const Home = () => {
               >
                 <div>
                   {/* Photo with Badge */}
-                  <div className="relative h-48 w-full overflow-hidden bg-slate-100">
+                  <Link
+                    to={`/services/${service.id}`}
+                    className="relative block h-48 w-full overflow-hidden bg-slate-100"
+                    title={`View ${service.title} details`}
+                  >
                     <img
                       src={service.image}
-                      alt={service.title}
+                      alt={`${service.title} - AS Cleaning Services`}
                       className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
                       onError={(e) => {
                         e.currentTarget.src =
                           "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=800";
@@ -456,13 +469,18 @@ const Home = () => {
                     <div className="absolute top-3 right-3 w-8 h-8 rounded-lg bg-white/95 backdrop-blur-sm text-slate-800 flex items-center justify-center text-xs shadow-md">
                       <service.icon />
                     </div>
-                  </div>
+                  </Link>
 
                   {/* Body Content */}
                   <div className="p-5 flex flex-col justify-between">
                     <div>
                       <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-primary transition-colors">
-                        {service.title}
+                        <Link
+                          to={`/services/${service.id}`}
+                          className="hover:text-primary transition-colors"
+                        >
+                          {service.title}
+                        </Link>
                       </h3>
                       <p className="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-2">
                         {service.description}

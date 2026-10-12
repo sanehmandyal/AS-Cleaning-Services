@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaClock, FaPaperPlane } from "react-icons/fa";
 import { contactApi } from "../services/contactApi";
+import SEOHead from "../components/SEOHead";
+import { buildLocalBusinessSchema, buildBreadcrumbSchema } from "../utils/seoSchema";
 
 const initialForm = { name: "", email: "", phone: "", subject: "", message: "" };
 
@@ -43,6 +45,12 @@ const Contact = () => {
 
   return (
     <div className="relative overflow-hidden bg-white">
+      <SEOHead
+        title="Contact AS Cleaning Services | 24/7 Helpline & Dispatch"
+        description="Contact AS Cleaning Services in Zirakpur, Mohali, Chandigarh & Tricity. 24/7 Helpline: 062800 16815. Fast emergency response and free quote inquiries."
+        canonicalPath="/contact"
+        schema={buildLocalBusinessSchema()}
+      />
       {/* Header Banner with Background Image */}
       <section className="relative bg-slate-900 py-18 sm:py-24 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -108,8 +116,8 @@ const Contact = () => {
 
             <div className="rounded-xl overflow-hidden h-48 sm:h-56 border border-slate-100 shadow-sm">
               <iframe
-                title="AS Cleaning Services Location"
-                src="https://www.google.com/maps?q=Springfield&output=embed"
+                title="AS Cleaning Services Service Area - Zirakpur, Mohali, Chandigarh"
+                src="https://www.google.com/maps?q=Zirakpur,+Punjab&output=embed"
                 width="100%"
                 height="100%"
                 loading="lazy"

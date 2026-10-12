@@ -6,6 +6,8 @@ import { serviceApi } from "../services/serviceApi";
 import { bookingApi } from "../services/bookingApi";
 import { useAuth } from "../context/AuthContext";
 import { Spinner } from "../components/UIState";
+import SEOHead from "../components/SEOHead";
+import { buildBreadcrumbSchema } from "../utils/seoSchema";
 
 const defaultServicesList = [
   { _id: "deep-cleaning", title: "Deep Cleaning" },
@@ -160,8 +162,19 @@ const Booking = () => {
 
   const selectedServiceObj = services.find((s) => s._id === form.service);
 
+  const breadcrumbs = [
+    { name: "Home", url: "/" },
+    { name: "Book a Cleaning", url: "/booking" },
+  ];
+
   return (
     <div className="relative overflow-hidden bg-white">
+      <SEOHead
+        title="Book Professional Cleaning Online"
+        description="Schedule a home cleaning, water tank sanitization, or deep cleaning online with AS Cleaning Services in Zirakpur, Mohali & Chandigarh. Instant confirmation."
+        canonicalPath="/booking"
+        schema={buildBreadcrumbSchema(breadcrumbs)}
+      />
       <section className="relative bg-slate-900 py-18 sm:py-24 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img

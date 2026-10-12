@@ -3,73 +3,9 @@ import ServiceCard from "../components/ServiceCard";
 import { SkeletonCard, EmptyState, ErrorState } from "../components/UIState";
 import { serviceApi } from "../services/serviceApi";
 import { FaSearch } from "react-icons/fa";
-
-const fallbackServices = [
-  {
-    _id: "1",
-    title: "Deep Cleaning",
-    slug: "deep-cleaning",
-    shortDescription: "Complete intensive sanitization for switchboards, hard-to-reach areas, baseboards, and deep grime.",
-    icon: "FaBroom",
-    image: "/images/services/deep-cleaning.jpg",
-  },
-  {
-    _id: "2",
-    title: "Water Tank Cleaning",
-    slug: "water-tank-cleaning",
-    shortDescription: "High-pressure rotary de-sludging and food-grade disinfectant scrub for pure, hygienic water storage.",
-    icon: "FaWater",
-    image: "/images/services/water-tank-cleaning.jpg",
-  },
-  {
-    _id: "3",
-    title: "Home Cleaning",
-    slug: "home-cleaning",
-    shortDescription: "Comprehensive recurring and one-off house sanitation including bedrooms, balconies, and living rooms.",
-    icon: "FaHome",
-    image: "/images/services/home-cleaning.jpg",
-  },
-  {
-    _id: "4",
-    title: "Bathroom Cleaning",
-    slug: "bathroom-cleaning",
-    shortDescription: "Targeted hard-water scale removal, high-pressure grout scrubbing, mirror polish, and fixture disinfection.",
-    icon: "FaBath",
-    image: "/images/services/bathroom-cleaning.jpg",
-  },
-  {
-    _id: "5",
-    title: "Kitchen Cleaning",
-    slug: "kitchen-cleaning",
-    shortDescription: "Specialized degreasing for oily chimney hoods, gas burners, exhaust fans, sink drains, and cabinets.",
-    icon: "FaUtensils",
-    image: "/images/services/kitchen-cleaning.jpg",
-  },
-  {
-    _id: "6",
-    title: "Sofa Cleaning",
-    slug: "sofa-cleaning",
-    shortDescription: "Deep fabric shampooing, high-suction extraction vacuuming, allergen purging, and upholstery protection.",
-    icon: "FaCouch",
-    image: "/images/services/sofa-cleaning.jpg",
-  },
-  {
-    _id: "7",
-    title: "Floor Cleaning",
-    slug: "floor-cleaning",
-    shortDescription: "Industrial single-disc machine scrubbing, tile grout descaling, and high-gloss buffing for tiles & marble.",
-    icon: "FaBroom",
-    image: "/images/services/floor-cleaning.jpg",
-  },
-  {
-    _id: "8",
-    title: "Property Cleaning",
-    slug: "property-cleaning",
-    shortDescription: "Full turnover sanitization for vacant properties, post-lease handovers, and move-in/move-out deep detailing.",
-    icon: "FaBuilding",
-    image: "/images/services/property-cleaning.jpg",
-  },
-];
+import { verifiedServices } from "../data/servicesData";
+import SEOHead from "../components/SEOHead";
+import { buildBreadcrumbSchema } from "../utils/seoSchema";
 
 const Services = () => {
   const [services, setServices] = useState([]);
@@ -78,27 +14,40 @@ const Services = () => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    document.title = "Our Services | AS Cleaning Services";
     serviceApi
       .getAll()
       .then((res) => {
         if (res.data?.data && res.data.data.length > 0) {
           setServices(res.data.data);
         } else {
-          setServices(fallbackServices);
+          setServices(verifiedServices);
         }
       })
-      .catch(() => setServices(fallbackServices))
+      .catch(() => setServices(verifiedServices))
       .finally(() => setLoading(false));
   }, []);
 
-  const filtered = services.filter((s) =>
-    s.title.toLowerCase().includes(search.toLowerCase()) ||
-    (s.shortDescription && s.shortDescription.toLowerCase().includes(search.toLowerCase()))
+  const filtered = services.filter(
+    (s) =>
+      s.title.toLowerCase().includes(search.toLowerCase()) ||
+      (s.shortDescription &&
+        s.shortDescription.toLowerCase().includes(search.toLowerCase()))
   );
+
+  const breadcrumbs = [
+    { name: "Home", url: "/" },
+    { name: "Services", url: "/services" },
+  ];
 
   return (
     <div className="relative overflow-hidden bg-white">
+      <SEOHead
+        title="Professional Cleaning Services"
+        description="Browse our specialized cleaning solutions in Zirakpur, Mohali & Chandigarh: Water Tank Cleaning, Deep Cleaning, Home Cleaning, Bathroom, Kitchen, Sofa & Floor Buffing."
+        canonicalPath="/services"
+        schema={buildBreadcrumbSchema(breadcrumbs)}
+      />
+
       {/* Services Header Banner with background image and gradient overlay */}
       <section className="relative bg-slate-900 py-18 sm:py-24 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -118,13 +67,13 @@ const Services = () => {
             Our Cleaning Services
           </h1>
           <p className="text-sm sm:text-base text-slate-300 mb-8 leading-relaxed">
-            Professional cleaning solutions tailored for residential homes, offices, and commercial facilities.
+            Professional cleaning solutions tailored for residential homes, offices, and commercial facilities across Zirakpur, Mohali, Chandigarh & Tricity.
           </p>
           <div className="relative max-w-md mx-auto">
             <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm" />
             <input
               type="text"
-              placeholder="Search services (e.g. residential, office)..."
+              placeholder="Search services (e.g. water tank, deep clean)..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="input-field !pl-11 !py-3 shadow-lg bg-white/95 text-slate-900 backdrop-blur-sm"
@@ -142,12 +91,19 @@ const Services = () => {
               {loading
                 ? Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
                 : filtered.map((service, i) => (
-                    <ServiceCard key={service._id} service={service} index={i} />
+                    <ServiceCard
+                      key={service._id || service.slug || i}
+                      service={service}
+                      index={i}
+                    />
                   ))}
             </div>
           )}
           {!loading && !error && filtered.length === 0 && (
-            <EmptyState title="No services found" subtitle="Try searching with a different keyword." />
+            <EmptyState
+              title="No services found"
+              subtitle="Try searching with a different keyword."
+            />
           )}
         </div>
       </section>
