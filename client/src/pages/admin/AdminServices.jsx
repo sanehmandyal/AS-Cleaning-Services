@@ -7,12 +7,13 @@ import { Spinner, EmptyState } from "../../components/UIState";
 
 const emptyForm = {
   title: "",
+  category: "popular",
   icon: "FaBroom",
   shortDescription: "",
   description: "",
-  image: "",
-  price: "",
-  duration: "",
+  image: "/images/services/deep-cleaning.jpg",
+  price: 0,
+  duration: "1-2 hours",
   featuresText: "",
   includedText: "",
   excludedText: "",
@@ -20,8 +21,8 @@ const emptyForm = {
 };
 
 const iconOptions = [
-  "FaBroom", "FaHome", "FaBuilding", "FaSprayCan", "FaTruckMoving", "FaHardHat",
-  "FaClipboardList", "FaBath", "FaUtensils", "FaBriefcase", "FaCouch",
+  "FaBroom", "FaWater", "FaHome", "FaBath", "FaUtensils", "FaCouch",
+  "FaBuilding", "FaSprayCan", "FaShieldAlt", "FaPumpSoap", "FaGem", "FaClipboardList"
 ];
 
 const AdminServices = () => {
@@ -56,16 +57,17 @@ const AdminServices = () => {
     setEditingId(s._id);
     setForm({
       title: s.title,
-      icon: s.icon,
-      shortDescription: s.shortDescription,
-      description: s.description,
-      image: s.image,
-      price: s.price,
-      duration: s.duration,
+      category: s.category || "popular",
+      icon: s.icon || "FaBroom",
+      shortDescription: s.shortDescription || "",
+      description: s.description || "",
+      image: s.image || "",
+      price: s.price || 0,
+      duration: s.duration || "1-2 hours",
       featuresText: (s.features || []).join("\n"),
       includedText: (s.included || []).join("\n"),
       excludedText: (s.excluded || []).join("\n"),
-      isActive: s.isActive,
+      isActive: s.isActive !== false,
     });
     setModalOpen(true);
   };
@@ -75,6 +77,7 @@ const AdminServices = () => {
     setSubmitting(true);
     const payload = {
       title: form.title,
+      category: form.category,
       icon: form.icon,
       shortDescription: form.shortDescription,
       description: form.description,
@@ -166,7 +169,9 @@ const AdminServices = () => {
                           <span className="font-medium text-ink">{s.title}</span>
                         </div>
                       </td>
-                      <td className="py-3 pr-4">${s.price}</td>
+                      <td className="py-3 pr-4 font-semibold text-slate-900">
+                        {s.price > 0 ? `₹${s.price}` : "Custom Quote"}
+                      </td>
                       <td className="py-3 pr-4">{s.duration}</td>
                       <td className="py-3 pr-4">
                         <button onClick={() => toggleActive(s)} className="flex items-center gap-1.5 text-xs font-semibold">
@@ -206,11 +211,22 @@ const AdminServices = () => {
               {editingId ? "Edit Service" : "Add New Service"}
             </h3>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-ink mb-1.5">Title</label>
-                  <input required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="input-field" />
+              <div className="grid sm:grid-cols-3 gap-4">
+                <div className="sm:col-span-2">
+                  <label className="block text-sm font-medium text-ink mb-1.5">Service Title *</label>
+                  <input required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="input-field" placeholder="e.g. Glass Cleaning & Window Washing" />
                 </div>
+                <div>
+                  <label className="block text-sm font-medium text-ink mb-1.5">Category *</label>
+                  <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="input-field">
+                    <option value="popular">Popular Services</option>
+                    <option value="home">Home & Villa</option>
+                    <option value="specialized">Specialized Cleaning</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid sm:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-ink mb-1.5">Icon</label>
                   <select value={form.icon} onChange={(e) => setForm({ ...form, icon: e.target.value })} className="input-field">
@@ -220,17 +236,44 @@ const AdminServices = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-ink mb-1.5">Price ($)</label>
-                  <input required type="number" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} className="input-field" />
+                  <label className="block text-sm font-medium text-ink mb-1.5">Starting Price (₹)</label>
+                  <input required type="number" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} className="input-field" placeholder="0 for Free Quote" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-ink mb-1.5">Duration</label>
-                  <input required value={form.duration} onChange={(e) => setForm({ ...form, duration: e.target.value })} className="input-field" placeholder="e.g. 2-3 hours" />
+                  <input required value={form.duration} onChange={(e) => setForm({ ...form, duration: e.target.value })} className="input-field" placeholder="e.g. 1-2 hours" />
                 </div>
               </div>
+
               <div>
-                <label className="block text-sm font-medium text-ink mb-1.5">Image URL</label>
-                <input required value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} className="input-field" placeholder="https://..." />
+                <label className="block text-sm font-medium text-ink mb-1.5">Image URL or Local Preset *</label>
+                <input required value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} className="input-field" placeholder="/images/services/... or https://..." />
+                <div className="flex flex-wrap items-center gap-1.5 mt-2">
+                  <span className="text-[11px] font-semibold text-slate-400 mr-1">1-Click Presets:</span>
+                  {[
+                    { label: "Deep Clean", path: "/images/services/deep-cleaning.jpg" },
+                    { label: "Water Tank", path: "/images/services/water-tank-cleaning.jpg" },
+                    { label: "Home", path: "/images/services/home-cleaning.jpg" },
+                    { label: "Bathroom", path: "/images/services/bathroom-cleaning.jpg" },
+                    { label: "Kitchen", path: "/images/services/kitchen-cleaning.jpg" },
+                    { label: "Sofa", path: "/images/services/sofa-cleaning.jpg" },
+                    { label: "Floor", path: "/images/services/floor-cleaning.jpg" },
+                    { label: "Property", path: "/images/services/property-cleaning.jpg" },
+                  ].map((preset) => (
+                    <button
+                      key={preset.path}
+                      type="button"
+                      onClick={() => setForm({ ...form, image: preset.path })}
+                      className={`text-[10px] font-medium border px-2 py-0.5 rounded transition-all ${
+                        form.image === preset.path
+                          ? "bg-primary text-white border-primary"
+                          : "bg-slate-50 hover:bg-sky-50 text-slate-700 border-slate-200"
+                      }`}
+                    >
+                      {preset.label}
+                    </button>
+                  ))}
+                </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-ink mb-1.5">Short Description</label>

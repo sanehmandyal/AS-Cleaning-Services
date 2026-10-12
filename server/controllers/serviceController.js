@@ -17,7 +17,13 @@ const getServiceById = asyncHandler(async (req, res) => {
   const { id } = req.params;
   let service = id.match(/^[0-9a-fA-F]{24}$/)
     ? await Service.findById(id)
-    : await Service.findOne({ slug: id });
+    : await Service.findOne({
+        $or: [
+          { slug: id.toLowerCase().trim() },
+          { slug: id.trim() },
+          { title: new RegExp(`^${id.replace(/-/g, " ")}$`, "i") },
+        ],
+      });
 
   if (!service) {
     res.status(404);

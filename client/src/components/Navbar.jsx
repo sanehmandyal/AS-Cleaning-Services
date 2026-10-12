@@ -26,7 +26,9 @@ import {
   FaQuestionCircle,
   FaCheckCircle,
 } from "react-icons/fa";
+import * as FaIcons from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
+import { serviceApi } from "../services/serviceApi";
 import Logo from "./Logo";
 
 // 8 Verified Services for Dropdown
@@ -130,6 +132,7 @@ const featureDropdownItems = [
 ];
 
 const Navbar = () => {
+  const [servicesList, setServicesList] = useState(serviceDropdownItems);
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
@@ -144,6 +147,50 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    serviceApi
+      .getAll()
+      .then((res) => {
+        if (res.data?.data && res.data.data.length > 0) {
+          const iconLookup = {
+            FaBroom,
+            FaWater,
+            FaHome,
+            FaBath,
+            FaUtensils,
+            FaCouch,
+            FaBuilding,
+          };
+          const mapped = res.data.data.map((s) => {
+            const fallback =
+              serviceDropdownItems.find(
+                (f) =>
+                  f.slug === s.slug ||
+                  f.slug === s._id ||
+                  f.label?.toLowerCase() === s.title?.toLowerCase()
+              ) || {};
+            const IconComp =
+              iconLookup[s.icon] ||
+              (FaIcons && FaIcons[s.icon]) ||
+              fallback.icon ||
+              FaBroom;
+            return {
+              slug: s.slug || s._id,
+              label: s.title,
+              desc:
+                s.shortDescription ||
+                fallback.desc ||
+                "Specialized professional cleaning service",
+              icon: IconComp,
+              tag: fallback.tag || (s.duration ? s.duration : "Available"),
+            };
+          });
+          setServicesList(mapped);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -298,7 +345,7 @@ const Navbar = () => {
                       </div>
 
                       <div className="grid grid-cols-2 gap-2">
-                        {serviceDropdownItems.map((item) => (
+                        {servicesList.map((item) => (
                           <Link
                             key={item.slug}
                             to={`/services/${item.slug}`}
@@ -635,7 +682,7 @@ const Navbar = () => {
 
                         {mobileServicesOpen && (
                           <div className="bg-slate-50/70 p-2 space-y-1 border-t border-slate-100">
-                            {serviceDropdownItems.map((item) => (
+                            {servicesList.map((item) => (
                               <Link
                                 key={item.slug}
                                 to={`/services/${item.slug}`}

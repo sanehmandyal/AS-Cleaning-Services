@@ -31,8 +31,10 @@ import Hero from "../components/Hero";
 import TransformationShowcase from "../components/TransformationShowcase";
 import WaterTankProcess from "../components/WaterTankProcess";
 import InstantEstimator from "../components/InstantEstimator";
+import * as FaIcons from "react-icons/fa";
 import { contactApi } from "../services/contactApi";
 import { testimonialApi } from "../services/testimonialApi";
+import { serviceApi } from "../services/serviceApi";
 import SEOHead from "../components/SEOHead";
 import { buildLocalBusinessSchema } from "../utils/seoSchema";
 
@@ -300,6 +302,7 @@ const faqsData = [
 ];
 
 const Home = () => {
+  const [services, setServices] = useState(allServices);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [openFaq, setOpenFaq] = useState(null);
   const [displayReviews, setDisplayReviews] = useState(googleReviews);
@@ -313,6 +316,60 @@ const Home = () => {
 
   useEffect(() => {
     document.title = "AS Home Cleaning Services | Clean Spaces • Healthy Lives";
+    // 1. Fetch live services from database
+    serviceApi
+      .getAll()
+      .then((res) => {
+        if (res.data?.data && res.data.data.length > 0) {
+          const iconLookup = {
+            FaBroom,
+            FaWater,
+            FaHome,
+            FaBath,
+            FaUtensils,
+            FaCouch,
+            FaBuilding,
+          };
+          const mapped = res.data.data.map((s) => {
+            const fallback =
+              allServices.find(
+                (f) =>
+                  f.id === s.slug ||
+                  f.id === s._id ||
+                  f.title?.toLowerCase() === s.title?.toLowerCase()
+              ) || {};
+            const IconComp =
+              iconLookup[s.icon] ||
+              (FaIcons && FaIcons[s.icon]) ||
+              fallback.icon ||
+              FaBroom;
+            return {
+              id: s.slug || s._id,
+              _id: s._id,
+              slug: s.slug,
+              category: s.category || fallback.category || "popular",
+              tag: fallback.tag || (s.duration ? s.duration.toUpperCase() : "AVAILABLE"),
+              tagColor:
+                fallback.tagColor || "bg-sky-50 text-primary border-sky-200",
+              icon: IconComp,
+              title: s.title,
+              description: s.shortDescription || s.description,
+              image: s.image || fallback.image || "/images/services/deep-cleaning.jpg",
+              features:
+                s.features?.length > 0 ? s.features : fallback.features || [],
+              ctaText: `Book ${s.title}`,
+              link: `/booking?service=${s.slug || s._id}`,
+            };
+          });
+          setServices(mapped);
+          if (mapped.length > 0) {
+            setQuickForm((qf) => ({ ...qf, service: mapped[0].title }));
+          }
+        }
+      })
+      .catch(() => {});
+
+    // 2. Fetch live testimonials from database
     testimonialApi
       .getAll()
       .then((res) => {
@@ -347,7 +404,7 @@ const Home = () => {
       .catch(() => {});
   }, []);
 
-  const filteredServices = allServices.filter((s) => {
+  const filteredServices = services.filter((s) => {
     if (selectedCategory === "all") return true;
     return s.category === selectedCategory;
   });
@@ -1069,14 +1126,11 @@ const Home = () => {
                       }
                       className="w-full bg-slate-50/70 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-primary focus:bg-white transition-colors"
                     >
-                      <option value="Deep Cleaning">Deep Cleaning</option>
-                      <option value="Water Tank Cleaning">Water Tank Cleaning</option>
-                      <option value="Home Cleaning">Home Cleaning</option>
-                      <option value="Bathroom Cleaning">Bathroom Cleaning</option>
-                      <option value="Kitchen Cleaning">Kitchen Cleaning</option>
-                      <option value="Sofa Cleaning">Sofa Cleaning</option>
-                      <option value="Floor Cleaning">Floor Cleaning</option>
-                      <option value="Property Cleaning">Property Cleaning</option>
+                      {services.map((s) => (
+                        <option key={s.id || s._id} value={s.title}>
+                          {s.title}
+                        </option>
+                      ))}
                     </select>
                   </div>
 

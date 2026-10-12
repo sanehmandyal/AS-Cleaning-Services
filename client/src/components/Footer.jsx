@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   FaFacebookF,
@@ -12,11 +12,38 @@ import {
   FaWhatsapp,
 } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
+import { serviceApi } from "../services/serviceApi";
 import Logo from "./Logo";
+
+const defaultFooterServices = [
+  { slug: "deep-cleaning", title: "Deep Cleaning" },
+  { slug: "water-tank-cleaning", title: "Water Tank Cleaning" },
+  { slug: "home-cleaning", title: "Home & Villa Cleaning" },
+  { slug: "bathroom-cleaning", title: "Bathroom Cleaning" },
+  { slug: "kitchen-cleaning", title: "Kitchen Degreasing" },
+  { slug: "sofa-cleaning", title: "Sofa & Upholstery" },
+];
 
 const Footer = () => {
   const { isAuthenticated, isAdmin } = useAuth();
+  const [footerServices, setFooterServices] = useState(defaultFooterServices);
   const year = new Date().getFullYear();
+
+  useEffect(() => {
+    serviceApi
+      .getAll()
+      .then((res) => {
+        if (res.data?.data && res.data.data.length > 0) {
+          setFooterServices(
+            res.data.data.slice(0, 6).map((s) => ({
+              slug: s.slug || s._id,
+              title: s.title,
+            }))
+          );
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <footer className="bg-slate-900 text-white border-t border-slate-800">
@@ -88,46 +115,16 @@ const Footer = () => {
               Our Services
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm text-slate-400">
-              <li>
-                <Link to="/services/deep-cleaning" className="hover:text-primary transition-colors">
-                  Deep Cleaning
-                </Link>
-              </li>
-              <li>
-                <Link to="/services/water-tank-cleaning" className="hover:text-primary transition-colors">
-                  Water Tank Cleaning
-                </Link>
-              </li>
-              <li>
-                <Link to="/services/home-cleaning" className="hover:text-primary transition-colors">
-                  Home & Villa Cleaning
-                </Link>
-              </li>
-              <li>
-                <Link to="/services/bathroom-cleaning" className="hover:text-primary transition-colors">
-                  Bathroom Cleaning
-                </Link>
-              </li>
-              <li>
-                <Link to="/services/kitchen-cleaning" className="hover:text-primary transition-colors">
-                  Kitchen Degreasing
-                </Link>
-              </li>
-              <li>
-                <Link to="/services/sofa-cleaning" className="hover:text-primary transition-colors">
-                  Sofa & Upholstery
-                </Link>
-              </li>
-              <li>
-                <Link to="/services/floor-cleaning" className="hover:text-primary transition-colors">
-                  Floor Machine Buffing
-                </Link>
-              </li>
-              <li>
-                <Link to="/services/property-cleaning" className="hover:text-primary transition-colors">
-                  Property Turnover Cleaning
-                </Link>
-              </li>
+              {footerServices.map((s) => (
+                <li key={s.slug}>
+                  <Link
+                    to={`/services/${s.slug}`}
+                    className="hover:text-primary transition-colors"
+                  >
+                    {s.title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

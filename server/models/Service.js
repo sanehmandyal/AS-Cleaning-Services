@@ -21,14 +21,25 @@ const serviceSchema = new mongoose.Schema(
         answer: String,
       },
     ],
+    category: { type: String, default: "popular" },
     isActive: { type: Boolean, default: true },
   },
   { timestamps: true }
 );
 
-serviceSchema.pre("validate", function (next) {
-  if (this.title) {
-    this.slug = slugify(this.title, { lower: true, strict: true });
+serviceSchema.pre("validate", async function (next) {
+  if (this.title && (!this.slug || this.isModified("title"))) {
+    let baseSlug = slugify(this.title, { lower: true, strict: true }) || "service";
+    let slug = baseSlug;
+    try {
+      const existing = await this.constructor.findOne({ slug, _id: { $ne: this._id } });
+      if (existing) {
+        slug = `${baseSlug}-${Date.now().toString().slice(-4)}`;
+      }
+    } catch (e) {
+      // fallback
+    }
+    this.slug = slug;
   }
   next();
 });

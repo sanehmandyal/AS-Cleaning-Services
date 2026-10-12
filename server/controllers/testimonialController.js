@@ -14,12 +14,20 @@ const getTestimonials = asyncHandler(async (req, res) => {
 // @route   POST /api/testimonials
 // @access  Public
 const createTestimonial = asyncHandler(async (req, res) => {
-  const { name, role, image, rating, message } = req.body;
+  const { name, role, image, rating, message, isApproved } = req.body;
   if (!name || !message) {
     res.status(400);
     throw new Error("Please provide name and message");
   }
-  const testimonial = await Testimonial.create({ name, role, image, rating, message });
+  const approved = isApproved !== undefined ? isApproved : true;
+  const testimonial = await Testimonial.create({
+    name,
+    role,
+    image,
+    rating,
+    message,
+    isApproved: approved,
+  });
   res.status(201).json({ success: true, data: testimonial });
 });
 
