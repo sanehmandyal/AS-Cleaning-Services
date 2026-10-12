@@ -101,10 +101,10 @@ const AdminLayout = () => {
         </div>
       )}
 
-      <div className="flex-1 lg:ml-64 flex flex-col min-h-screen">
-        <header className="h-16 bg-white border-b border-slate-100 flex items-center justify-between px-4 sm:px-8 sticky top-0 z-20">
+      <div className="flex-1 lg:ml-64 flex flex-col min-h-screen min-w-0 w-full overflow-x-hidden">
+        <header className="h-16 bg-white border-b border-slate-100 flex items-center justify-between px-3.5 sm:px-8 sticky top-0 z-20">
           <button
-            className="lg:hidden text-xl text-slate-700 hover:text-primary"
+            className="lg:hidden text-xl text-slate-700 hover:text-primary p-1 -ml-1"
             onClick={() => setOpen(true)}
             aria-label="Open sidebar"
           >
@@ -113,10 +113,10 @@ const AdminLayout = () => {
           <div className="hidden lg:block text-xs font-semibold text-slate-400 uppercase tracking-wider">
             Admin Management Console
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link
               to="/"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-primary bg-slate-100 hover:bg-sky-50 px-3 py-1.5 rounded-lg transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-primary bg-slate-100 hover:bg-sky-50 px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-lg transition-colors shrink-0"
             >
               <FaExternalLinkAlt size={10} />
               <span>Live Website</span>
@@ -127,12 +127,12 @@ const AdminLayout = () => {
               </p>
               <p className="text-[10px] text-slate-400">Administrator</p>
             </div>
-            <span className="w-8 h-8 rounded-full bg-sky-50 text-primary text-xs font-bold flex items-center justify-center border border-sky-100">
+            <span className="w-8 h-8 rounded-full bg-sky-50 text-primary text-xs font-bold flex items-center justify-center border border-sky-100 shrink-0">
               {user?.name?.[0] || "A"}
             </span>
           </div>
         </header>
-        <main className="flex-1 p-3.5 sm:p-6 lg:p-8 overflow-x-hidden max-w-full">
+        <main className="flex-1 p-3.5 sm:p-6 lg:p-8 min-w-0 w-full overflow-x-hidden">
           <Outlet />
         </main>
       </div>

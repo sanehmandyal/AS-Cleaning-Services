@@ -106,6 +106,25 @@ const Footer = () => {
                   Get a Free Quote
                 </Link>
               </li>
+              <li>
+                {isAuthenticated && isAdmin ? (
+                  <Link
+                    to="/admin"
+                    className="text-sky-400 hover:text-sky-300 font-semibold transition-colors inline-flex items-center gap-1.5"
+                    title="Admin Management Console"
+                  >
+                    <span>⚡ Admin Console</span>
+                  </Link>
+                ) : (
+                  <Link
+                    to="/login"
+                    className="text-slate-400 hover:text-sky-400 transition-colors inline-flex items-center gap-1.5"
+                    title="Admin Login Portal"
+                  >
+                    <span>🔒 Staff / Admin Login</span>
+                  </Link>
+                )}
+              </li>
             </ul>
           </div>
 
@@ -163,15 +182,15 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 text-center sm:text-left">
+        {/* Bottom Bar: Positioned completely away from bottom-right floating buttons */}
+        <div className="mt-12 pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-slate-400">
           <p>© {year} AS Cleaning Services. All rights reserved.</p>
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 sm:pr-0 pr-16">
+          <div className="flex flex-wrap items-center gap-4">
             <p className="text-slate-300 font-medium">Clean Spaces • Healthy Lives</p>
             {isAuthenticated && isAdmin ? (
               <Link
                 to="/admin"
-                className="text-primary hover:text-sky-300 font-semibold transition-colors inline-flex items-center gap-1 border-l border-slate-700 pl-3 sm:pl-4"
+                className="text-primary hover:text-sky-300 font-semibold transition-colors inline-flex items-center gap-1 border-l border-slate-700 pl-4"
                 title="Admin Management Console"
               >
                 ⚡ Admin Console
@@ -179,7 +198,7 @@ const Footer = () => {
             ) : (
               <Link
                 to="/login"
-                className="text-slate-400 hover:text-sky-400 transition-colors inline-flex items-center gap-1 border-l border-slate-700 pl-3 sm:pl-4"
+                className="text-slate-400 hover:text-sky-400 transition-colors inline-flex items-center gap-1 border-l border-slate-700 pl-4"
                 title="Admin Login Portal"
               >
                 🔒 Admin Access
