@@ -901,10 +901,10 @@ const Home = () => {
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 shrink-0">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 shrink-0 w-full sm:w-auto">
               <a
                 href="tel:06280016815"
-                className="inline-flex items-center gap-2.5 bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-md transition-all hover:scale-[1.02]"
+                className="inline-flex items-center justify-center gap-2.5 bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-md transition-all active:scale-95"
               >
                 <FaPhoneAlt size={12} className="text-slate-800" />
                 <span>Call 062800 16815</span>
@@ -913,7 +913,7 @@ const Home = () => {
                 href="https://wa.me/916280016815?text=Hello%20AS%20Cleaning%20Services,%20I%20would%20like%20to%20book%20a%20service"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#16A34A] hover:bg-[#15803D] text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-md transition-all hover:scale-[1.02]"
+                className="inline-flex items-center justify-center gap-2 bg-[#16A34A] hover:bg-[#15803D] text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-md transition-all active:scale-95"
               >
                 <FaWhatsapp size={15} />
                 <span>WhatsApp Us</span>
@@ -1050,19 +1050,19 @@ const Home = () => {
               </div>
 
               {/* 2 Bottom Buttons */}
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <a
                   href="tel:06280016815"
-                  className="flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm py-3.5 px-4 rounded-xl shadow-md transition-all hover:scale-[1.02]"
+                  className="flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm py-3.5 px-4 rounded-xl shadow-md transition-all active:scale-95"
                 >
                   <FaPhoneAlt size={12} />
-                  <span>Direct Call</span>
+                  <span>Direct Call: 062800 16815</span>
                 </a>
                 <a
                   href="https://wa.me/916280016815?text=Hello%20AS%20Cleaning%20Services,%20I%20want%20to%20inquire%20about%20your%20services"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 bg-[#16A34A] hover:bg-[#15803D] text-white font-bold text-xs sm:text-sm py-3.5 px-4 rounded-xl shadow-md transition-all hover:scale-[1.02]"
+                  className="flex items-center justify-center gap-2 bg-[#16A34A] hover:bg-[#15803D] text-white font-bold text-xs sm:text-sm py-3.5 px-4 rounded-xl shadow-md transition-all active:scale-95"
                 >
                   <FaWhatsapp size={15} />
                   <span>WhatsApp Message</span>
