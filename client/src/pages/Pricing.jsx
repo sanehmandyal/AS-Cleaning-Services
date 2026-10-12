@@ -135,7 +135,7 @@ const Pricing = () => {
                         {s.shortDescription}
                       </p>
                       <div className="mb-6">
-                        <span className="text-3xl font-extrabold">${s.price}</span>
+                        <span className="text-3xl font-extrabold">{s.price > 0 ? `₹${s.price}` : "Custom Quote"}</span>
                         <span
                           className={`text-xs ${
                             featured ? "text-slate-400" : "text-slate-500"
