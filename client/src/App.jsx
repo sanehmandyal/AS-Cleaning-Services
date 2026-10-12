@@ -16,6 +16,8 @@ import Pricing from "./pages/Pricing";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import Locations from "./pages/Locations";
+import LocationDetail from "./pages/LocationDetail";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
@@ -56,6 +58,10 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/locations" element={<Locations />} />
+          <Route path="/locations/:slug" element={<LocationDetail />} />
+          <Route path="/location/:slug" element={<LocationDetail />} />
+          <Route path="/city/:slug" element={<LocationDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>

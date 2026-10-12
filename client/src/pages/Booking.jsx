@@ -47,6 +47,13 @@ const Booking = () => {
 
   useEffect(() => {
     document.title = "Book a Cleaning | AS Cleaning Services";
+    const cityParam = params.get("city") || params.get("location");
+    if (cityParam) {
+      setForm((f) => ({
+        ...f,
+        address: f.address || `${cityParam}, `,
+      }));
+    }
     serviceApi
       .getAll()
       .then((res) => {

@@ -10,9 +10,11 @@ import {
   FaEnvelope,
   FaClock,
   FaWhatsapp,
+  FaArrowRight,
 } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 import { serviceApi } from "../services/serviceApi";
+import { locationsList } from "../data/locationsData";
 import Logo from "./Logo";
 
 const defaultFooterServices = [
@@ -179,6 +181,39 @@ const Footer = () => {
                 <span>24/7 Availability & Emergency Dispatch</span>
               </li>
             </ul>
+          </div>
+        </div>
+
+        {/* Service Locations Strip */}
+        <div className="mt-12 pt-8 border-t border-slate-800">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <div>
+              <h5 className="text-xs font-bold text-white uppercase tracking-wider">
+                Service Locations & Cities We Serve
+              </h5>
+              <p className="text-[11px] text-slate-400 mt-0.5">
+                Doorstep professional cleaning, water tank sanitization & housekeeping across Punjab, Himachal & Tricity
+              </p>
+            </div>
+            <Link
+              to="/locations"
+              className="text-xs font-semibold text-primary hover:text-sky-300 transition-colors inline-flex items-center gap-1 shrink-0"
+            >
+              <span>View All Locations</span>
+              <FaArrowRight size={10} />
+            </Link>
+          </div>
+          <div className="flex flex-wrap gap-2 text-xs">
+            {locationsList.map((loc) => (
+              <Link
+                key={loc.slug}
+                to={`/locations/${loc.slug}`}
+                className="bg-slate-800/90 hover:bg-slate-700 text-slate-300 hover:text-white px-3 py-1.5 rounded-lg transition-colors inline-flex items-center gap-1.5 text-xs font-medium"
+              >
+                <FaMapMarkerAlt size={9} className="text-sky-400" />
+                <span>{loc.name}</span>
+              </Link>
+            ))}
           </div>
         </div>
 

@@ -107,3 +107,46 @@ export const buildFaqSchema = (faqs = []) => {
     })),
   };
 };
+
+export const buildCityLocalBusinessSchema = (city) => {
+  if (!city) return null;
+  const canonicalUrl = `${BASE_URL}/locations/${city.slug}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    name: `AS Cleaning Services - ${city.name}`,
+    image: `${BASE_URL}${city.heroImage || "/images/services/deep-cleaning.jpg"}`,
+    "@id": `${canonicalUrl}/#organization`,
+    url: canonicalUrl,
+    telephone: "+91-6280016815",
+    priceRange: "₹₹",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: city.name,
+      addressRegion: city.state,
+      addressCountry: "IN",
+    },
+    areaServed: {
+      "@type": "City",
+      name: city.name,
+    },
+    description: city.metaDescription,
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ],
+        opens: "00:00",
+        closes: "23:59",
+      },
+    ],
+  };
+};
+

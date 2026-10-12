@@ -27,6 +27,7 @@ import {
   FaChevronUp,
   FaPaperPlane,
 } from "react-icons/fa";
+import { locationsList } from "../data/locationsData";
 import Hero from "../components/Hero";
 import TransformationShowcase from "../components/TransformationShowcase";
 import WaterTankProcess from "../components/WaterTankProcess";
@@ -812,13 +813,38 @@ const Home = () => {
                     Professional Cleaning Services Near You
                   </h3>
 
-                  <div className="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed mb-8">
+                  <div className="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
                     <p>
                       Looking for reliable home cleaning services in your city or residential sector? AS Home Cleaning Services provides professional cleaning solutions for homes, properties, and water tanks.
                     </p>
                     <p>
-                      Contact us today to discuss your cleaning requirements. Serving all surrounding neighborhoods, apartment complexes, independent villas, and commercial premises — 24 hours a day, 7 days a week.
+                      Serving Ludhiana, Punjab, Amb, Una, Chandigarh, Mohali, Zirakpur, and all surrounding areas — 24 hours a day, 7 days a week.
                     </p>
+                  </div>
+
+                  {/* Quick City Navigation Badges */}
+                  <div className="mb-8">
+                    <span className="block text-[10px] font-bold uppercase tracking-wider text-sky-300 mb-2.5">
+                      Explore Local Service Pages:
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {locationsList.slice(0, 7).map((loc) => (
+                        <Link
+                          key={loc.slug}
+                          to={`/locations/${loc.slug}`}
+                          className="inline-flex items-center gap-1 bg-slate-900 hover:bg-primary text-slate-300 hover:text-white px-2.5 py-1 rounded-lg border border-slate-800 text-[11px] font-semibold transition-colors"
+                        >
+                          <FaMapMarkerAlt size={9} className="text-sky-400" />
+                          <span>{loc.name}</span>
+                        </Link>
+                      ))}
+                      <Link
+                        to="/locations"
+                        className="inline-flex items-center gap-1 bg-sky-500/20 hover:bg-sky-500 text-sky-300 hover:text-white px-2.5 py-1 rounded-lg border border-sky-400/30 text-[11px] font-bold transition-colors"
+                      >
+                        <span>More Towns →</span>
+                      </Link>
+                    </div>
                   </div>
                 </div>
 

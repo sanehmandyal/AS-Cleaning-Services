@@ -25,10 +25,12 @@ import {
   FaStar,
   FaQuestionCircle,
   FaCheckCircle,
+  FaMapMarkerAlt,
 } from "react-icons/fa";
 import * as FaIcons from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 import { serviceApi } from "../services/serviceApi";
+import { locationsList } from "../data/locationsData";
 import Logo from "./Logo";
 
 // 8 Verified Services for Dropdown
@@ -138,10 +140,12 @@ const Navbar = () => {
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [featuresDropdownOpen, setFeaturesDropdownOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
-  const [mobileFeaturesOpen, setMobileFeaturesOpen] = useState(false);
+  const [locationsDropdownOpen, setLocationsDropdownOpen] = useState(false);
+  const [mobileLocationsOpen, setMobileLocationsOpen] = useState(false);
 
   const servicesTimeoutRef = useRef(null);
   const featuresTimeoutRef = useRef(null);
+  const locationsTimeoutRef = useRef(null);
 
   const { isAuthenticated, isAdmin, user, logout } = useAuth();
   const navigate = useNavigate();
@@ -213,6 +217,7 @@ const Navbar = () => {
     setOpen(false);
     setServicesDropdownOpen(false);
     setFeaturesDropdownOpen(false);
+    setLocationsDropdownOpen(false);
   }, [location.pathname]);
 
   const handleLogout = () => {
@@ -225,6 +230,7 @@ const Navbar = () => {
     setOpen(false);
     setServicesDropdownOpen(false);
     setFeaturesDropdownOpen(false);
+    setLocationsDropdownOpen(false);
 
     if (to.startsWith("/#")) {
       const targetId = to.replace("/#", "");
@@ -263,8 +269,24 @@ const Navbar = () => {
     }, 150);
   };
 
+  // Hover handlers for Locations
+  const handleLocationsMouseEnter = () => {
+    clearTimeout(locationsTimeoutRef.current);
+    setLocationsDropdownOpen(true);
+  };
+  const handleLocationsMouseLeave = () => {
+    locationsTimeoutRef.current = setTimeout(() => {
+      setLocationsDropdownOpen(false);
+    }, 150);
+  };
+
   const isServicesActive =
     location.pathname.startsWith("/services") || location.pathname === "/services";
+
+  const isLocationsActive =
+    location.pathname.startsWith("/locations") ||
+    location.pathname.startsWith("/location") ||
+    location.pathname.startsWith("/city");
 
   return (
     <>
@@ -379,6 +401,94 @@ const Navbar = () => {
                           className="font-bold text-primary hover:underline text-[11px]"
                         >
                           Instant Free Quote →
+                        </Link>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Locations Dropdown */}
+              <div
+                className="relative"
+                onMouseEnter={handleLocationsMouseEnter}
+                onMouseLeave={handleLocationsMouseLeave}
+              >
+                <button
+                  type="button"
+                  onClick={() => setLocationsDropdownOpen((prev) => !prev)}
+                  className={`inline-flex items-center gap-1.5 text-xs xl:text-sm font-semibold px-3 py-1.5 rounded-full transition-all whitespace-nowrap ${
+                    isLocationsActive || locationsDropdownOpen
+                      ? "bg-white text-primary shadow-xs font-bold border border-slate-200/80"
+                      : "text-slate-600 hover:text-slate-950 hover:bg-white"
+                  }`}
+                  aria-expanded={locationsDropdownOpen}
+                >
+                  <FaMapMarkerAlt size={10} className="text-primary" />
+                  <span>Locations</span>
+                  <FaChevronDown
+                    size={9}
+                    className={`transition-transform duration-200 ${
+                      locationsDropdownOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                <AnimatePresence>
+                  {locationsDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                      transition={{ duration: 0.18 }}
+                      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-96 bg-white rounded-2xl shadow-2xl border border-slate-200 p-4 z-50"
+                    >
+                      <div className="flex items-center justify-between pb-3 mb-2 border-b border-slate-100">
+                        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                          Key Service Cities & Towns
+                        </span>
+                        <Link
+                          to="/locations"
+                          onClick={() => setLocationsDropdownOpen(false)}
+                          className="text-xs font-bold text-primary hover:text-primary-deep flex items-center gap-1"
+                        >
+                          All Locations <FaArrowRight size={10} />
+                        </Link>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-2">
+                        {locationsList.slice(0, 8).map((loc) => (
+                          <Link
+                            key={loc.slug}
+                            to={`/locations/${loc.slug}`}
+                            onClick={() => setLocationsDropdownOpen(false)}
+                            className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 transition-colors group"
+                          >
+                            <span className="w-7 h-7 rounded-lg bg-sky-50 text-primary flex items-center justify-center text-xs shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                              <FaMapMarkerAlt size={11} />
+                            </span>
+                            <div className="min-w-0">
+                              <div className="text-xs font-bold text-slate-900 group-hover:text-primary transition-colors truncate">
+                                {loc.name}
+                              </div>
+                              <p className="text-[10px] text-slate-500 leading-tight truncate">
+                                {loc.state}
+                              </p>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+
+                      <div className="mt-3 pt-3 border-t border-slate-100 bg-slate-50/70 -mx-4 -mb-4 p-3 rounded-b-2xl flex items-center justify-between text-xs text-slate-600">
+                        <span className="font-medium text-[11px]">
+                          Doorstep service across Punjab, HP & Tricity
+                        </span>
+                        <Link
+                          to="/locations"
+                          onClick={() => setLocationsDropdownOpen(false)}
+                          className="font-bold text-primary hover:underline text-[11px]"
+                        >
+                          View Coverage Map →
                         </Link>
                       </div>
                     </motion.div>
@@ -701,6 +811,60 @@ const Navbar = () => {
                               className="block text-center text-xs font-bold text-primary py-2 hover:underline border-t border-slate-200/60 mt-1"
                             >
                               View All Services Overview →
+                            </Link>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Locations Accordion */}
+                      <div className="rounded-lg overflow-hidden border border-slate-100">
+                        <button
+                          type="button"
+                          onClick={() => setMobileLocationsOpen((prev) => !prev)}
+                          className={`w-full text-sm font-semibold py-2.5 px-3.5 flex items-center justify-between transition-colors ${
+                            isLocationsActive || mobileLocationsOpen
+                              ? "bg-sky-50/70 text-primary font-bold"
+                              : "text-slate-700 hover:bg-slate-50"
+                          }`}
+                        >
+                          <div className="flex items-center gap-2">
+                            <FaMapMarkerAlt className="text-primary text-xs" />
+                            <span>Locations ({locationsList.length})</span>
+                          </div>
+                          <FaChevronDown
+                            size={11}
+                            className={`transition-transform duration-200 text-slate-400 ${
+                              mobileLocationsOpen ? "rotate-180 text-primary" : ""
+                            }`}
+                          />
+                        </button>
+
+                        {mobileLocationsOpen && (
+                          <div className="bg-slate-50/70 p-2 space-y-1 border-t border-slate-100">
+                            {locationsList.map((item) => (
+                              <Link
+                                key={item.slug}
+                                to={`/locations/${item.slug}`}
+                                onClick={() => setOpen(false)}
+                                className="flex items-center justify-between p-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-white hover:text-primary transition-colors"
+                              >
+                                <span className="flex items-center gap-2">
+                                  <span className="w-5 h-5 rounded bg-sky-100/60 text-primary flex items-center justify-center text-[10px] shrink-0">
+                                    <FaMapMarkerAlt size={9} />
+                                  </span>
+                                  <span>{item.name}</span>
+                                </span>
+                                <span className="text-[10px] text-slate-400 font-normal">
+                                  {item.state}
+                                </span>
+                              </Link>
+                            ))}
+                            <Link
+                              to="/locations"
+                              onClick={() => setOpen(false)}
+                              className="block text-center text-xs font-bold text-primary py-2 hover:underline border-t border-slate-200/60 mt-1"
+                            >
+                              Explore All Service Locations →
                             </Link>
                           </div>
                         )}
