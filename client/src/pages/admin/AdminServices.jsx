@@ -131,15 +131,20 @@ const AdminServices = () => {
   };
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-ink">Manage Services</h1>
-        <button onClick={openCreate} className="btn-primary !py-2.5 !px-5 text-sm">
-          <FaPlus size={12} /> Add Service
+    <div className="w-full min-w-0">
+      <div className="flex items-center justify-between gap-3 mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-ink">Manage Services</h1>
+        <button
+          onClick={openCreate}
+          className="btn-primary !py-2 !px-3.5 sm:!py-2.5 sm:!px-5 text-xs sm:text-sm shrink-0 whitespace-nowrap"
+        >
+          <FaPlus size={11} />
+          <span className="hidden xs:inline">Add Service</span>
+          <span className="xs:hidden">Add</span>
         </button>
       </div>
 
-      <div className="card p-6">
+      <div className="card p-4 sm:p-6 w-full min-w-0">
         {loading ? (
           <Spinner />
         ) : services.length === 0 ? (
