@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FaPlus, FaEdit, FaTrash, FaTimes, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaPlus, FaEdit, FaTrash, FaTimes, FaEye, FaEyeSlash, FaCloudUploadAlt } from "react-icons/fa";
 import { blogApi } from "../../services/blogApi";
 import { Spinner, EmptyState } from "../../components/UIState";
 
@@ -167,9 +167,55 @@ const AdminBlog = () => {
                 <label className="block text-sm font-medium text-ink mb-1.5">Title</label>
                 <input required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="input-field" />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-ink mb-1.5">Featured Image URL</label>
-                <input required value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} className="input-field" placeholder="https://..." />
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <label className="block text-sm font-medium text-ink">Featured Image</label>
+                  <label className="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary hover:bg-primary-dark text-white text-xs font-medium shadow-sm transition-all">
+                    <FaCloudUploadAlt size={15} />
+                    <span>Upload from Device</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        if (file.size > 5 * 1024 * 1024) {
+                          toast.error("Please select an image under 5MB");
+                          return;
+                        }
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                          setForm({ ...form, image: event.target.result });
+                          toast.success("Image loaded from device!");
+                        };
+                        reader.readAsDataURL(file);
+                      }}
+                    />
+                  </label>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  {form.image && (
+                    <div className="w-16 h-12 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden shrink-0 shadow-xs">
+                      <img
+                        src={form.image}
+                        alt="Blog preview"
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.style.display = "none";
+                        }}
+                      />
+                    </div>
+                  )}
+                  <input
+                    required
+                    value={form.image}
+                    onChange={(e) => setForm({ ...form, image: e.target.value })}
+                    className="input-field text-xs flex-1"
+                    placeholder="https://... or upload from your device above"
+                  />
+                </div>
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
