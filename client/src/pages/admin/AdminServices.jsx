@@ -150,58 +150,125 @@ const AdminServices = () => {
         ) : services.length === 0 ? (
           <EmptyState title="No services yet" subtitle="Add your first service to get started." />
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="text-left text-ink/40 border-b border-gray-100">
-                  <th className="py-3 pr-4 font-medium">Service</th>
-                  <th className="py-3 pr-4 font-medium">Price</th>
-                  <th className="py-3 pr-4 font-medium">Duration</th>
-                  <th className="py-3 pr-4 font-medium">Status</th>
-                  <th className="py-3 pr-4 font-medium">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {services.map((s) => {
-                  const Icon = FaIcons[s.icon] || FaIcons.FaBroom;
-                  return (
-                    <tr key={s._id} className="border-b border-gray-50 last:border-0">
-                      <td className="py-3 pr-4">
-                        <div className="flex items-center gap-3">
-                          <span className="w-9 h-9 rounded-lg bg-primary-light text-primary flex items-center justify-center shrink-0">
-                            <Icon size={14} />
+          <div>
+            {/* Mobile Card List View (Visible on Phones < 640px) */}
+            <div className="block sm:hidden space-y-3">
+              {services.map((s) => {
+                const Icon = FaIcons[s.icon] || FaIcons.FaBroom;
+                return (
+                  <div
+                    key={s._id}
+                    className="p-3.5 rounded-xl border border-slate-100 bg-slate-50/50 space-y-2.5"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <span className="w-8 h-8 rounded-lg bg-sky-50 text-primary flex items-center justify-center shrink-0">
+                          <Icon size={13} />
+                        </span>
+                        <div className="min-w-0">
+                          <h4 className="font-semibold text-slate-900 text-xs sm:text-sm truncate">
+                            {s.title}
+                          </h4>
+                          <p className="text-[11px] text-slate-400 capitalize">{s.category} • {s.duration}</p>
+                        </div>
+                      </div>
+                      <span className="font-bold text-slate-900 text-xs shrink-0">
+                        {s.price > 0 ? `₹${s.price}` : "Quote"}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-2 border-t border-slate-200/60">
+                      <button
+                        onClick={() => toggleActive(s)}
+                        className="flex items-center gap-1.5 text-xs font-semibold"
+                      >
+                        {s.isActive ? (
+                          <span className="flex items-center gap-1 text-emerald-600 text-[11px]">
+                            <FaToggleOn size={16} /> Active
                           </span>
-                          <span className="font-medium text-ink">{s.title}</span>
-                        </div>
-                      </td>
-                      <td className="py-3 pr-4 font-semibold text-slate-900">
-                        {s.price > 0 ? `₹${s.price}` : "Custom Quote"}
-                      </td>
-                      <td className="py-3 pr-4">{s.duration}</td>
-                      <td className="py-3 pr-4">
-                        <button onClick={() => toggleActive(s)} className="flex items-center gap-1.5 text-xs font-semibold">
-                          {s.isActive ? (
-                            <span className="flex items-center gap-1.5 text-success"><FaToggleOn size={18} /> Active</span>
-                          ) : (
-                            <span className="flex items-center gap-1.5 text-ink/40"><FaToggleOff size={18} /> Disabled</span>
-                          )}
+                        ) : (
+                          <span className="flex items-center gap-1 text-slate-400 text-[11px]">
+                            <FaToggleOff size={16} /> Disabled
+                          </span>
+                        )}
+                      </button>
+
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() => openEdit(s)}
+                          className="text-primary hover:text-sky-700 p-1 text-sm"
+                          aria-label="Edit service"
+                        >
+                          <FaEdit />
                         </button>
-                      </td>
-                      <td className="py-3 pr-4">
-                        <div className="flex items-center gap-3">
-                          <button onClick={() => openEdit(s)} className="text-primary hover:text-primary-dark" aria-label="Edit service">
-                            <FaEdit />
+                        <button
+                          onClick={() => setDeleteId(s._id)}
+                          className="text-red-400 hover:text-red-600 p-1 text-sm"
+                          aria-label="Delete service"
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Desktop / Tablet Table View (Visible on sm: screens and up) */}
+            <div className="hidden sm:block overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left text-ink/40 border-b border-gray-100">
+                    <th className="py-3 pr-4 font-medium">Service</th>
+                    <th className="py-3 pr-4 font-medium">Price</th>
+                    <th className="py-3 pr-4 font-medium">Duration</th>
+                    <th className="py-3 pr-4 font-medium">Status</th>
+                    <th className="py-3 pr-4 font-medium">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {services.map((s) => {
+                    const Icon = FaIcons[s.icon] || FaIcons.FaBroom;
+                    return (
+                      <tr key={s._id} className="border-b border-gray-50 last:border-0">
+                        <td className="py-3 pr-4">
+                          <div className="flex items-center gap-3">
+                            <span className="w-9 h-9 rounded-lg bg-sky-50 text-primary flex items-center justify-center shrink-0">
+                              <Icon size={14} />
+                            </span>
+                            <span className="font-medium text-ink">{s.title}</span>
+                          </div>
+                        </td>
+                        <td className="py-3 pr-4 font-semibold text-slate-900">
+                          {s.price > 0 ? `₹${s.price}` : "Custom Quote"}
+                        </td>
+                        <td className="py-3 pr-4">{s.duration}</td>
+                        <td className="py-3 pr-4">
+                          <button onClick={() => toggleActive(s)} className="flex items-center gap-1.5 text-xs font-semibold">
+                            {s.isActive ? (
+                              <span className="flex items-center gap-1.5 text-success"><FaToggleOn size={18} /> Active</span>
+                            ) : (
+                              <span className="flex items-center gap-1.5 text-ink/40"><FaToggleOff size={18} /> Disabled</span>
+                            )}
                           </button>
-                          <button onClick={() => setDeleteId(s._id)} className="text-red-400 hover:text-red-600" aria-label="Delete service">
-                            <FaTrash />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                        </td>
+                        <td className="py-3 pr-4">
+                          <div className="flex items-center gap-3">
+                            <button onClick={() => openEdit(s)} className="text-primary hover:text-primary-dark" aria-label="Edit service">
+                              <FaEdit />
+                            </button>
+                            <button onClick={() => setDeleteId(s._id)} className="text-red-400 hover:text-red-600" aria-label="Delete service">
+                              <FaTrash />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>
